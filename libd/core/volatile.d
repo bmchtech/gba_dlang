@@ -45,26 +45,16 @@ nothrow:
  */
 
 ubyte  volatileLoad(ubyte * ptr);
-
 ushort volatileLoad(ushort* ptr);
-
-uint volatileLoad(uint* ptr);
-// uint   volatileLoad(uint  * ptr) {
-//     // ARMv5 asm implementation of load
-//     return __asm__("ldr %0, [%1]\n\t", "=r"(ptr) : "r"(ptr));
-// }
-
+uint   volatileLoad(uint  * ptr);
 ulong  volatileLoad(ulong * ptr);
 
 void volatileStore(ubyte * ptr, ubyte  value);
-
 void volatileStore(ushort* ptr, ushort value);
-
 void volatileStore(uint  * ptr, uint   value);
-
 void volatileStore(ulong * ptr, ulong  value);
 
-void volatileBarrier() {
+pragma(inline, true) void volatileBarrier() {
     // ARMv5 asm to mark memory as clobbered, as a barrier
     return __asm("", "~{memory}");
 }
