@@ -31,13 +31,17 @@ void mgba_printf(int level, const char* ptr, ...) {
 }
 
 bool mgba_open() {
-    // *REG_DEBUG_ENABLE = 0xC0DE;
-    volatileStore(REG_DEBUG_ENABLE, 0xC0DE);
-    // return *REG_DEBUG_ENABLE == 0x1DEA;
-    return volatileLoad(REG_DEBUG_ENABLE) == 0x1DEA;
+    volatileBarrier();
+    *REG_DEBUG_ENABLE = 0xC0DE;
+    // volatileStore(REG_DEBUG_ENABLE, 0xC0DE);
+    volatileBarrier();
+    return *REG_DEBUG_ENABLE == 0x1DEA;
+    // return volatileLoad(REG_DEBUG_ENABLE) == 0x1DEA;
 }
 
 void mgba_close() {
-    // *REG_DEBUG_ENABLE = 0;
-    volatileStore(REG_DEBUG_ENABLE, 0);
+    volatileBarrier();
+    *REG_DEBUG_ENABLE = 0;
+    volatileBarrier();
+    // volatileStore(REG_DEBUG_ENABLE, 0);
 }
