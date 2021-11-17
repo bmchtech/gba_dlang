@@ -4,6 +4,7 @@ import core.stdc.stdarg;
 import core.stdc.stdio;
 import core.stdc.string;
 import tonc.tonc_types;
+import core.volatile;
 
 extern (C):
 
@@ -30,8 +31,13 @@ void mgba_printf(int level, const char* ptr, ...) {
 }
 
 bool mgba_open() {
-    *REG_DEBUG_ENABLE = 0xC0DE;
-    return *REG_DEBUG_ENABLE == 0x1DEA;
+    // *REG_DEBUG_ENABLE = 0xC0DE;
+    volatileStore(REG_DEBUG_ENABLE, 0xC0DE);
+    // return *REG_DEBUG_ENABLE == 0x1DEA;
+    return volatileLoad(REG_DEBUG_ENABLE) == 0x1DEA;
 }
 
-void mgba_close() { *REG_DEBUG_ENABLE = 0; }
+void mgba_close() {
+    // *REG_DEBUG_ENABLE = 0;
+    volatileStore(REG_DEBUG_ENABLE, 0);
+}
