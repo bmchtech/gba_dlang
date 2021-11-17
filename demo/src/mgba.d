@@ -11,6 +11,42 @@ extern (C):
 enum REG_DEBUG_ENABLE = cast(shared vu16*) 0x4FFF780;
 enum REG_DEBUG_FLAGS = cast(shared vu16*) 0x4FFF700;
 enum REG_DEBUG_STRING = cast(shared char*) 0x4FFF600;
+enum REG_BEAN_KEYBOARD1 = cast(shared char*) 0x4FFF100; // 4 bytes for keyboard
+enum REG_BEAN_KEYBOARD2 = cast(shared char*) 0x4FFF100; // 4 bytes for keyboard
+enum REG_BEAN_MOUSE = cast(shared char*) 0x4FFF104;    // 4 bytes for mouse
+
+/*
+KEYBOARD1 bits (little-endian):
+    bits 0-25: a-z
+    bit 26: shift
+    bit 27: ctrl
+    bit 28: alt
+    bit 29: super
+    bit 30: fn
+    bit 31: esc
+KEYBOARD2 bits (little-endian):
+    bits 0-9: 0-9
+    bit 10: ,
+    bit 11: .
+    bit 12: /
+    bit 13: ;
+    bit 14: '
+    bit 15: [
+    bit 16: ]
+    bit 17: \
+    bit 18: -
+    bit 19: +
+    bit 20: `
+    bit 21: tab
+    bit 22: return
+    bit 23: backspace
+    bit 24: left arrow
+    bit 25: right arrow
+    bit 26: up arrow
+    bit 27: down arrow
+MOUSE bits (little-endian):
+    TODO
+*/
 
 enum MGBA_LOG_LEVEL
 {
