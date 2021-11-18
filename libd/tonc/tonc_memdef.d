@@ -315,9 +315,9 @@ extern (D) auto BLD_BOT(T)(auto ref T n)
     return n << BLD_BOT_SHIFT;
 }
 
-extern (D) auto BLD_BUILD(T0, T1, T2)(auto ref T0 top, auto ref T1 bot, auto ref T2 mode)
+extern (D) u16 BLD_BUILD(T0, T1, T2)(auto ref T0 top, auto ref T1 bot, auto ref T2 mode)
 {
-    return ((bot & 63) << 8) | ((mode & 3) << 6) | (top & 63);
+    return cast(u16) ((bot & 63) << 8) | ((mode & 3) << 6) | (top & 63);
 }
 
 //\}
@@ -342,9 +342,9 @@ extern (D) auto BLD_EVB(T)(auto ref T n)
     return n << BLD_EVB_SHIFT;
 }
 
-extern (D) auto BLDA_BUILD(T0, T1)(auto ref T0 eva, auto ref T1 evb)
+extern (D) u16 BLDA_BUILD(T0, T1)(auto ref T0 eva, auto ref T1 evb)
 {
-    return (eva & 31) | ((evb & 31) << 8);
+    return cast(u16) ((eva & 31) | ((evb & 31) << 8));
 }
 
 //\}
