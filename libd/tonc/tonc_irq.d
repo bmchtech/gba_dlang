@@ -27,7 +27,7 @@ extern (C):
 /*! \{	*/
 
 //! IRQ indices, to be used in most functions.
-enum eIrqIndex
+enum IrqIndex
 {
     II_VBLANK = 0,
     II_HBLANK = 1,
@@ -105,13 +105,13 @@ void isr_master_nest ();
 void irq_init (fnptr isr);
 fnptr irq_set_master (fnptr isr);
 
-fnptr irq_add (eIrqIndex irq_id, fnptr isr);
-fnptr irq_delete (eIrqIndex irq_id);
+fnptr irq_add (IrqIndex irq_id, fnptr isr);
+fnptr irq_delete (IrqIndex irq_id);
 
-fnptr irq_set (eIrqIndex irq_id, fnptr isr, uint opts);
+fnptr irq_set (IrqIndex irq_id, fnptr isr, uint opts);
 
-void irq_enable (eIrqIndex irq_id);
-void irq_disable (eIrqIndex irq_id);
+void irq_enable (IrqIndex irq_id);
+void irq_disable (IrqIndex irq_id);
 
 // --------------------------------------------------------------------
 // INLINES 
