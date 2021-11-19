@@ -1,6 +1,7 @@
 import core.stdc.stdio;
 import tonc;
 import mgba;
+import beancomputer;
 
 extern (C) int main() {
     // nothing
@@ -30,6 +31,13 @@ extern (C) int main() {
         mgba_printf(MGBA_LOG_LEVEL.MGBA_LOG_ERROR, "Hello, from %s!\n",
                 cast(const char*) "Bean Machine");
         tte_printf("#{P:20,40}#{ci:4}mgba opened");
+    }
+
+    auto bc_support = beancomputer_check_support();
+    if (bc_support == BeanComputerSupport.NOT_SUPPORTED) {
+        tte_printf("#{P:20,54}#{ci:1}bc not supported (use gamebean emulator)");
+    } else {
+        tte_printf("#{P:20,54}#{ci:4}bc version: %s", cast(int) bc_support);
     }
 
     while (TRUE) {
