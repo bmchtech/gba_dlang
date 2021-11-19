@@ -40,8 +40,14 @@ extern (C) int main() {
         tte_printf("#{P:20,54}#{ci:4}bc version: %s", cast(int) bc_support);
     }
 
-    while (TRUE) {
-        key_poll();
+    while (true) {
+        beancomputer_input_poll();
+
+        if (beancomputer_key_down(beancomputer_input_state, BeanComputerKeyboardKey.Q) {
+            pal_bg_mem[0] = 0x39BB;
+        } else {
+            pal_bg_mem[0] = 0x6B9D;
+        }
     }
 
     return 0;
