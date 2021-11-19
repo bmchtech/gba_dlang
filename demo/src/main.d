@@ -43,7 +43,7 @@ extern (C) int main() {
     while (true) {
         beancomputer_input_poll();
 
-        if (beancomputer_key_down(beancomputer_input_state, BeanComputerKeyboardKey.Q) {
+        if (beancomputer_key_down(beancomputer_input_state, BeanComputerKeyboardKey.Q)) {
             pal_bg_mem[0] = 0x39BB;
         } else {
             pal_bg_mem[0] = 0x6B9D;
