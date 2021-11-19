@@ -19,3 +19,10 @@ this would not have been possible without:
 
 ## demo
 see the [demo project](demo/) for a fully functional example of building a gba rom with dlang.
+
+```sh
+cd demo
+make clean
+make build
+mgba-qt GBADlang.gba
+```
