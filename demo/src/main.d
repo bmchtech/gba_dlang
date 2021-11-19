@@ -34,19 +34,23 @@ extern (C) int main() {
     }
 
     auto bc_support = beancomputer_check_support();
+    bool bc_enabled = false;
     if (bc_support == BeanComputerSupport.NOT_SUPPORTED) {
         tte_printf("#{P:20,54}#{ci:1}bc not supported (use gamebean emulator)");
     } else {
         tte_printf("#{P:20,54}#{ci:4}bc version: %s", cast(int) bc_support);
+        bc_enabled = true;
     }
 
     while (true) {
-        beancomputer_input_poll();
+        if (bc_enabled) {
+            beancomputer_input_poll();
 
-        if (beancomputer_key_down(beancomputer_input_state, BeanComputerKeyboardKey.Q)) {
-            pal_bg_mem[0] = 0x39BB;
-        } else {
-            pal_bg_mem[0] = 0x6B9D;
+            if (beancomputer_key_down(beancomputer_input_state, BeanComputerKeyboardKey.Q)) {
+                pal_bg_mem[0] = 0x39BB;
+            } else {
+                pal_bg_mem[0] = 0x6B9D;
+            }
         }
     }
 
