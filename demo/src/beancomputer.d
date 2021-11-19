@@ -1,6 +1,7 @@
 module beancomputer;
 
 import tonc.tonc_types;
+import core.volatile;
 
 /*
 BEANCOMPUTER STANDARD v0.1
@@ -206,6 +207,7 @@ void beancomputer_input_poll() {
     // update prev state
     beancomputer_prev_input_state = beancomputer_input_state;
     // read new state
+    volatileBarrier();
     beancomputer_input_state.keyboard1 = *REG_BEANCOMPUTER_KEYBOARD1;
     beancomputer_input_state.keyboard2 = *REG_BEANCOMPUTER_KEYBOARD2;
     beancomputer_input_state.mouse = *REG_BEANCOMPUTER_MOUSE;
