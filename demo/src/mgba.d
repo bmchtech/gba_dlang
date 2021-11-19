@@ -53,8 +53,7 @@ MOUSE bits (little-endian):
     bit 18: middle button
 */
 
-enum MGBA_LOG_LEVEL
-{
+enum MGBA_LOG_LEVEL {
     MGBA_LOG_FATAL = 0,
     MGBA_LOG_ERROR = 1,
     MGBA_LOG_WARN = 2,
@@ -68,7 +67,7 @@ void mgba_printf(int level, const char* ptr, ...) {
     va_start(args, ptr);
     vsprintf(REG_DEBUG_STRING, ptr, args);
     va_end(args);
-    *REG_DEBUG_FLAGS = cast(u16) (level | 0x100);
+    *REG_DEBUG_FLAGS = cast(u16)(level | 0x100);
 }
 
 bool mgba_open() {

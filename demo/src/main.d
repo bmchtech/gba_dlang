@@ -2,17 +2,18 @@ import core.stdc.stdio;
 import tonc;
 import mgba;
 
-extern(C) int main() {
-	// nothing
-	printf("Hello, world!\n");
-    
+extern (C) int main() {
+    // nothing
+    printf("Hello, world!\n");
+
     *REG_DISPCNT = DCNT_MODE0 | DCNT_BG0;
     pal_bg_mem[0] = 0x6B9D; // background color
 
     // write some text to screen
     *REG_DISPCNT |= DCNT_BG1;
-	tte_init_chr4c(1, cast(u16) (BG_CBB!u16(0)|BG_SBB!u16(31)), 0, 0x0201, CLR_WHITE, null, null);
-	tte_init_con();
+    tte_init_chr4c(1, cast(u16)(BG_CBB!u16(0) | BG_SBB!u16(31)), 0, 0x0201,
+            CLR_WHITE, null, null);
+    tte_init_con();
 
     // set text colors
     pal_bg_mem[1] = 0x39BB;
@@ -26,7 +27,8 @@ extern(C) int main() {
 
     bool mgba_opened = mgba_open();
     if (mgba_opened) {
-        mgba_printf(MGBA_LOG_LEVEL.MGBA_LOG_ERROR, "Hello, from %s!\n", cast(const char*)"Bean Machine");
+        mgba_printf(MGBA_LOG_LEVEL.MGBA_LOG_ERROR, "Hello, from %s!\n",
+                cast(const char*) "Bean Machine");
         tte_printf("#{P:20,40}#{ci:4}mgba opened");
     }
 
@@ -34,5 +36,5 @@ extern(C) int main() {
         key_poll();
     }
 
-	return 0;
+    return 0;
 }
