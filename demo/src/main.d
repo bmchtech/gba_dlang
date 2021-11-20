@@ -45,7 +45,7 @@ int main() {
     auto bc_support = beancomputer_check_support();
     bool bc_enabled = false;
     if (bc_support == BeanComputerSupport.NOT_SUPPORTED) {
-        tte_printf("#{P:20,54}#{ci:1}bc not supported (use gamebean emulator)");
+        tte_printf("#{P:20,54}#{ci:1}no beancomputer (use gamebean)");
     } else {
         tte_printf("#{P:20,54}#{ci:4}beancomputer #{ci:3}ver: 0x%02x", cast(int) bc_support);
         tte_printf("#{P:20,64}#{ci:4}press [shift] for bc test");
