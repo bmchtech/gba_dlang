@@ -3,6 +3,8 @@ module beancomputer;
 import tonc.tonc_types;
 import core.volatile;
 
+extern (C):
+
 /*
 BEANCOMPUTER STANDARD v0.1
 An extension to the GBA, adding a few IO registers to allow for general purpose computing!
@@ -86,6 +88,14 @@ struct BeanComputerInputState {
     u32 mouse = 0x0 | (0x1L << 16) | (0x1L << 17) | (0x1L << 18);
 }
 
+struct BeanComputerMouseState {
+    u8 x = 0;
+    u8 y = 0;
+    bool left = false;
+    bool right = false;
+    bool middle = false;
+}
+
 enum BeanComputerKeyboardKey : ulong {
     A = (0x1L << 0),
     B = (0x1L << 1),
@@ -161,37 +171,16 @@ __gshared BeanComputerInputState beancomputer_prev_input_state;
 enum REG_BEANCOMPUTER_KEYBOARD1 = cast(shared u32*) 0x4FFF108;
 enum REG_BEANCOMPUTER_KEYBOARD2 = cast(shared u32*) 0x4FFF10c;
 enum REG_BEANCOMPUTER_MOUSE = cast(shared u32*) 0x4FFF110;
-KEYBOARD1 bits (little-endian):
-    bits 0-25: a-z
-    bit 26: shift
-    bit 27: ctrl
-    bit 28: alt
-    bit 29: super
-    bit 30: fn
-    bit 31: esc
-KEYBOARD2 bits (little-endian):
-    bits 0-9: 0-9
-    bit 10: ,
-    bit 11: .
-    bit 12: /
-    bit 13: ;
-    bit 14: '
-    bit 15: [
-    bit 16: ]
-    bit 17: \
-    bit 18: -
-    bit 19: +
-    bit 20: `
-    bit 21: tab
-    bit 22: return
-    bit 23: backspace
-    bit 24: left arrow
-    bit 25: right arrow
-    bit 26: up arrow
-    bit 27: down arrow
+
+MOUSE bits (little-endian):
+    bit 0-7: mouse x
+    bit 8-15: mouse y
+    bit 16: left button
+    bit 17: right button
+    bit 18: middle button
 */
 
-/* check whether a key is down in a state */
+/** check whether a key is down in a state */
 bool beancomputer_key_down(BeanComputerInputState state, BeanComputerKeyboardKey key) {
     // check whether key is in keyboard1 or keyboard2
     bool is_keyboard2 = (key & 0xFFFFFFFF) == 0;
@@ -202,7 +191,35 @@ bool beancomputer_key_down(BeanComputerInputState state, BeanComputerKeyboardKey
     return (check_reg & key) == 0;
 }
 
-/* read input registers and update cached states */
+/** get the mouse state from the cached input state */
+BeanComputerMouseState beancomputer_mouse_read_state(BeanComputerInputState state) {
+    BeanComputerMouseState mouse_state;
+    mouse_state.x = (state.mouse >> 0) & 0xFF;
+    mouse_state.y = (state.mouse >> 8) & 0xFF;
+    mouse_state.left = (state.mouse >> 16) & 0x1;
+    mouse_state.right = (state.mouse >> 17) & 0x1;
+    mouse_state.middle = (state.mouse >> 18) & 0x1;
+    return mouse_state;
+}
+
+/** get the mouse state from the cached input state */
+BeanComputerMouseState beancomputer_mouse_get_state() {
+    return beancomputer_mouse_read_state(beancomputer_input_state);
+}
+
+/** check if key wasn't previously pressed but is now */
+bool beancomputer_key_just_pressed(BeanComputerKeyboardKey key) {
+    return !beancomputer_key_down(beancomputer_prev_input_state, key)
+        && beancomputer_key_down(beancomputer_input_state, key);
+}
+
+/** check if key was previously pressed but is up now */
+bool beancomputer_key_just_released(BeanComputerKeyboardKey key) {
+    return beancomputer_key_down(beancomputer_prev_input_state, key)
+        && !beancomputer_key_down(beancomputer_input_state, key);
+}
+
+/** read input registers and update cached states */
 void beancomputer_input_poll() {
     // update prev state
     beancomputer_prev_input_state = beancomputer_input_state;
