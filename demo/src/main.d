@@ -18,7 +18,7 @@ void init_show_info() {
     // write some text to screen
     *REG_DISPCNT |= DCNT_BG1;
     tte_init_chr4c(1, cast(u16)(BG_CBB!u16(0) | BG_SBB!u16(31)), 0, 0x0201,
-            CLR_WHITE, null, null);
+            CLR_WHITE, &verdana9Font, null);
     tte_init_con();
 
     // set text colors
@@ -47,8 +47,8 @@ int main() {
     if (bc_support == BeanComputerSupport.NOT_SUPPORTED) {
         tte_printf("#{P:20,54}#{ci:1}bc not supported (use gamebean emulator)");
     } else {
-        tte_printf("#{P:20,54}#{ci:4}bc ver: 0x%02x", cast(int) bc_support);
-        tte_printf("#{P:20,64}#{ci:4}press [shift] to enter bc view");
+        tte_printf("#{P:20,54}#{ci:4}beancomputer #{ci:3}ver: 0x%02x", cast(int) bc_support);
+        tte_printf("#{P:20,64}#{ci:4}press [shift] for bc test");
         bc_enabled = true;
     }
 
