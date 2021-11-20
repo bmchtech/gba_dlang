@@ -38,7 +38,7 @@ extern (C) int main() {
     if (bc_support == BeanComputerSupport.NOT_SUPPORTED) {
         tte_printf("#{P:20,54}#{ci:1}bc not supported (use gamebean emulator)");
     } else {
-        tte_printf("#{P:20,54}#{ci:4}bc version: %s", cast(int) bc_support);
+        tte_printf("#{P:20,54}#{ci:4}bc version: %d", cast(int) bc_support);
         bc_enabled = true;
     }
 
