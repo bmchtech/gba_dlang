@@ -53,6 +53,10 @@ int main() {
     }
 
     while (true) {
+        // init irq
+        irq_init(null);
+        irq_add(IrqIndex.II_VBLANK, null);
+
         frame_count++;
 
         if (bc_enabled) {
@@ -64,7 +68,7 @@ int main() {
                 tte_erase_screen();
             }
 
-            if (beancomputer_log && frame_count % 8 == 0) {
+            if (beancomputer_log && frame_count % 2 == 0) {
                 // tte_erase_rect(12, 12, 80, 12);
                 tte_erase_rect(20, 26, 60, 12);
 
@@ -75,6 +79,7 @@ int main() {
                 tte_printf("#{P:20,26}#{ci:4}mouse: %d, %d", mouse_state.x, mouse_state.y);
             }
         }
+        VBlankIntrWait();
     }
 
     return 0;

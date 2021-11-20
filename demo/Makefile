@@ -1,6 +1,6 @@
 PATH := $(DEVKITARM)/bin:$(PATH)
 
-TITLE		:= GBADlang
+TITLE		:= BCTest
 
 #  Project settings
 
