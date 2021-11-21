@@ -29,21 +29,21 @@ extern (C):
 //! IRQ indices, to be used in most functions.
 enum IrqIndex
 {
-    II_VBLANK = 0,
-    II_HBLANK = 1,
-    II_VCOUNT = 2,
-    II_TIMER0 = 3,
-    II_TIMER1 = 4,
-    II_TIMER2 = 5,
-    II_TIMER3 = 6,
-    II_SERIAL = 7,
-    II_DMA0 = 8,
-    II_DMA1 = 9,
-    II_DMA2 = 10,
-    II_DMA3 = 11,
-    II_KEYPAD = 12,
-    II_GAMEPAK = 13,
-    II_MAX = 14
+    VBLANK = 0,
+    HBLANK = 1,
+    VCOUNT = 2,
+    TIMER0 = 3,
+    TIMER1 = 4,
+    TIMER2 = 5,
+    TIMER3 = 6,
+    SERIAL = 7,
+    DMA0 = 8,
+    DMA1 = 9,
+    DMA2 = 10,
+    DMA3 = 11,
+    KEYPAD = 12,
+    GAMEPAK = 13,
+    MAX = 14
 }
 
 //! \name Options for irq_set
