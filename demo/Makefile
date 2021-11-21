@@ -29,6 +29,7 @@ ASFLAGS	:= -mthumb-interwork
 CFLAGS	:= $(ARCH) -Wall -Werror -Wno-error=unused-variable -fno-strict-aliasing -mcpu=arm7tdmi -mtune=arm7tdmi $(INCFLAGS) $(LIBFLAGS)
 LDFLAGS	:= $(ARCH) $(SPECS) $(LIBFLAGS) -Wl,-Map,$(TITLE).map
 DFLAGS  := -betterC --defaultlib=no -mtriple=arm-none-eabi -mcpu=arm7tdmi \
+				-mattr=+strict-align,+loop-align\
 				-I$(SOURCE_DIR) \
 				--d-version=DevkitARM --d-version=CRuntime_Newlib_GBA --d-version=_GBA \
 				-function-sections
