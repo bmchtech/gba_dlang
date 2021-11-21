@@ -12,7 +12,7 @@
 module tonc.tonc_input;
 
 import tonc.tonc_types;
-
+import tonc.tonc_core;
 
 extern (C):
 
@@ -29,7 +29,7 @@ extern (C):
 // CONSTANTS
 // --------------------------------------------------------------------
 
-enum eKeyIndex
+enum KeyIndex
 {
     KI_A = 0,
     KI_B = 1,
@@ -133,46 +133,74 @@ void key_wait_till_hit (ushort key);
 // --------------------------------------------------------------------
 
 //! Get current keystate
-uint key_curr_state ();
+u32 key_curr__state() {
+    return __key_curr;
+}
 
 //! Get previous key state
-uint key_prev_state ();
+u32 key_prev__state() {
+    return __key_prev;
+}
 
 //! Gives the keys of \a key that are currently down
-uint key_is_down (uint key);
+u32 key_is_down(u32 key) {
+    return __key_curr & key;
+}
 
 //! Gives the keys of \a key that are currently up
-uint key_is_up (uint key);
+u32 key_is_up(u32 key) {
+    return  ~(cast(int)__key_curr) & key;
+}
 
 //! Gives the keys of \a key that were previously down
-uint key_was_down (uint key);
+u32 key_was_down(u32 key) {
+    return __key_prev & key;
+}
 
 //! Gives the keys of \a key that were previously down
-uint key_was_up (uint key);
+u32 key_was_up(u32 key) {
+    return  ~(cast(int)__key_prev) & key;
+}
 
 //! Gives the keys of \a key that are different from before
-uint key_transit (uint key);
+u32 key_transit(u32 key) {
+    return (__key_curr ^ __key_prev) & key;
+}
 
 //! Gives the keys of \a key that are being held down
-uint key_held (uint key);
+u32 key_held(u32 key) {
+    return (__key_curr & __key_prev) & key;
+}
 
 //! Gives the keys of \a key that are pressed (down now but not before)
-uint key_hit (uint key);
+u32 key_hit(u32 key) {
+    return (__key_curr &  ~(cast(int)__key_prev)) & key;
+}
 
 //! Gives the keys of \a key that are being released
-uint key_released (uint key);
+u32 key_released(u32 key) {
+    return ( ~(cast(int)__key_curr & __key_prev)) & key;
+}
 
 //! Horizontal tribool (right,left)=(+,-)
-int key_tri_horz ();
+int key_tri_horz() {
+    return bit_tribool(__key_curr, KeyIndex.KI_RIGHT, KeyIndex.KI_LEFT);
+}
 
 //! Vertical tribool (down,up)=(+,-)
-int key_tri_vert ();
+int key_tri_vert() {
+    return bit_tribool(__key_curr, KeyIndex.KI_DOWN, KeyIndex.KI_UP);
+}
 
 //! Shoulder-button tribool (R,L)=(+,-)
-int key_tri_shoulder ();
+int key_tri_shoulder() {
+    return bit_tribool(__key_curr, KeyIndex.KI_R, KeyIndex.KI_L);
+}
 
 //! Fire-button tribool (A,B)=(+,-)
-int key_tri_fire ();
+int key_tri_fire() {
+    return bit_tribool(__key_curr, KeyIndex.KI_A, KeyIndex.KI_B);
+}
 
 /*	\}	*/
 
