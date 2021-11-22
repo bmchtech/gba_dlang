@@ -62,7 +62,7 @@ int main() {
         if (bc_enabled) {
             beancomputer_input_poll();
 
-            // when RETURN is pressed, write info about beancomputer version
+            // when SHIFT is pressed, write info about beancomputer version
             if (beancomputer_key_just_pressed(BeanComputerKeyboardKey.SHIFT)) {
                 beancomputer_log = true;
                 tte_erase_screen();
