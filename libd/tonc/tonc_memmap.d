@@ -475,7 +475,7 @@ vu32* REG_FIFO_B() { return cast(vu32*) (REG_BASE + 0x00A4); }
 //! \name DMA registers
 //\{
 // enum REG_DMA = cast(DMA_REC*) REG_BASE + 0x00B0; //!< DMA as DMA_REC array
-DMA_REC* REG_DMA() { return cast(DMA_REC*) REG_BASE + 0x00B0; }
+DMA_REC** REG_DMA() { return cast(DMA_REC**) REG_BASE + 0x00B0; }
 
 // enum REG_DMA0SAD = *cast(vu32*) REG_BASE + 0x00B0; //!< DMA 0 Source address
 vu32* REG_DMA0SAD() { return cast(vu32*) (REG_BASE + 0x00B0); }

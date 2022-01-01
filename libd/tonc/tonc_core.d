@@ -14,6 +14,7 @@ module tonc.tonc_core;
 
 import tonc.tonc_types;
 import tonc.tonc_memdef;
+import tonc.tonc_memmap;
 
 extern (C):
 
@@ -450,25 +451,37 @@ uint hword2word (ushort h0, ushort h1);
 /*!	\addtogroup grpDma	*/
 /*!	\{	*/
 
-//! Generic DMA copy routine.
-/*!	\param dst	Destination address.
-*	\param src	Source address.
-*	\param count	Number of copies to perform.
-*	\param ch	DMA channel.
-*	\param mode	DMA transfer mode.
-*	\note	\a count is the number of copies, not the size in bytes.
-*/
-void dma_cpy (void* dst, const(void)* src, uint count, uint ch, uint mode);
+// //! Generic DMA copy routine.
+// /*!	\param dst	Destination address.
+// *	\param src	Source address.
+// *	\param count	Number of copies to perform.
+// *	\param ch	DMA channel.
+// *	\param mode	DMA transfer mode.
+// *	\note	\a count is the number of copies, not the size in bytes.
+// */
+// void dma_cpy (void* dst, const(void)* src, uint count, uint ch, uint mode)
+// {
+// 	REG_DMA[ch].cnt= 0;
+// 	REG_DMA[ch].src= src;
+// 	REG_DMA[ch].dst= dst;
+// 	REG_DMA[ch].cnt= mode | count;
+// }
 
-//! Generic DMA fill routine.
-/*!	\param dst	Destination address.
-*	\param src	Source value.
-*	\param count	Number of copies to perform.
-*	\param ch	DMA channel.
-*	\param mode	DMA transfer mode.
-*	\note	\a count is the number of copies, not the size in bytes.
-*/
-void dma_fill (void* dst, uint src, uint count, uint ch, uint mode);
+// //! Generic DMA fill routine.
+// /*!	\param dst	Destination address.
+// *	\param src	Source value.
+// *	\param count	Number of copies to perform.
+// *	\param ch	DMA channel.
+// *	\param mode	DMA transfer mode.
+// *	\note	\a count is the number of copies, not the size in bytes.
+// */
+// void dma_fill (void* dst, uint src, uint count, uint ch, uint mode)
+// {
+// 	REG_DMA[ch].cnt= 0;
+// 	REG_DMA[ch].src= cast(const(void*))&src;
+// 	REG_DMA[ch].dst= dst;
+// 	REG_DMA[ch].cnt= count | mode | DMA_SRC_FIXED;
+// }
 
 //! Specific DMA copier, using channel 3, word transfers.
 /*!	\param dst	Destination address.
@@ -476,7 +489,14 @@ void dma_fill (void* dst, uint src, uint count, uint ch, uint mode);
 *	\param size	Number of bytes to copy
 *	\note	\a size is the number of bytes
 */
-void dma3_cpy (void* dst, const(void)* src, uint size);
+void dma3_cpy (void* dst, const(void)* src, uint size)
+// {	dma_cpy(dst, src, size/4, 3, DMA_CPY32);	}
+{
+	*REG_DMA3CNT = 0;
+	*REG_DMA3SAD = cast(vu32) src;
+	*REG_DMA3DAD = cast(vu32) dst;
+	*REG_DMA3CNT = (size/4) | DMA_CPY32 | DMA_SRC_FIXED;
+}
 
 //! Specific DMA filler, using channel 3, word transfers.
 /*!	\param dst	Destination address.
@@ -484,7 +504,8 @@ void dma3_cpy (void* dst, const(void)* src, uint size);
 *	\param size	Number of bytes to copy
 *	\note	\a size is the number of bytes
 */
-void dma3_fill (void* dst, uint src, uint size);
+void dma3_fill (void* dst, uint src, uint size)
+{	dma_fill(dst, src, size/4, 3, DMA_FILL32);	}
 
 /*! \}	*/
 
