@@ -70,7 +70,7 @@ final abstract class MyPeripheral : Peripheral!(0x2000_1000)
 }
  --------------------
 */
-module libd.mmio;
+module libtind.mmio;
 
 nothrow:
 
