@@ -408,7 +408,8 @@ uint bf_clamp (int x, uint len);
 	  <b>-1</b> if \a minus bit is set and \a plus bit isn't<br>
 	  <b>0</b> if neither or both are set.
 */
-int bit_tribool (uint flags, uint plus, uint minus);
+int bit_tribool (uint flags, uint plus, uint minus)
+{	return ((flags>>plus)&1) - ((flags>>minus)&1);	}
 
 //! Rotate bits right. Yes, this does lead to a ror instruction.
 uint ROR (uint x, uint ror);
