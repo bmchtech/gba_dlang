@@ -231,7 +231,7 @@ pragma(inline, true) {
     {	obj_aff_scale(oaff, ((1<<24)/wx)>>8, ((1<<24)/wy)>>8);	}
 
     void obj_aff_rotate_inv(OBJ_AFFINE *oaff, u16 theta)
-    {	obj_aff_rotate(oaff, -theta);		}
+    {	obj_aff_rotate(oaff, cast(u16)(-cast(int)theta));		}
 
     void obj_aff_shearx_inv(OBJ_AFFINE *oaff, FIXED hx)
     {	obj_aff_shearx(oaff, -hx);								}
