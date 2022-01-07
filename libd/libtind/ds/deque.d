@@ -6,7 +6,7 @@ import core.stdc.stdio;
 
 import libtind.util;
 
-// @nogc:
+@nogc:
 struct Deque(T) {
     alias NodePtr = Node!T*;
     struct Node(T) {
