@@ -1,4 +1,4 @@
-module dvector;
+module libtind.ds.vector;
 
 version(LDC){
     version(D_BetterC){
@@ -11,7 +11,7 @@ import core.stdc.string;
 
 private enum CAPACITY = 4;
 
-struct Dvector(T) {
+struct Vector(T) {
     private T* chunks;
     private size_t total;
     size_t capacity;
@@ -49,10 +49,10 @@ struct Dvector(T) {
     But, it is Ok if the standard library functions return a handle of copied range
     so that you can free it manually. Otherwise, you leak memory.
     */
-    Dvector!T save() @nogc nothrow {
+    Vector!T save() @nogc nothrow {
         T* cc_chunks = cast(T*)malloc(T.sizeof * this.capacity);
         memcpy(cc_chunks, chunks, capacity * T.sizeof);
-        return Dvector!T(cc_chunks, this.total, this.capacity);
+        return Vector!T(cc_chunks, this.total, this.capacity);
     }
 
     this(T* chunks, size_t total, size_t capacity) @nogc nothrow {
@@ -205,7 +205,7 @@ struct Dvector(T) {
         return result;
     }
     
-    Dvector!T opBinary(string op)(ref Dvector!T rhs) @nogc nothrow{
+    Vector!T opBinary(string op)(ref Vector!T rhs) @nogc nothrow{
         static if (op == "~"){
             foreach(elem; rhs)
                 insertBack(elem);
@@ -214,7 +214,7 @@ struct Dvector(T) {
         else static assert(0, "Operator "~op~" not implemented");
     }
     
-    Dvector!T opBinary(string op)(T rhs) @nogc nothrow {
+    Vector!T opBinary(string op)(T rhs) @nogc nothrow {
         static if (op == "~"){
             insertBack(rhs);
             return this;
@@ -222,13 +222,13 @@ struct Dvector(T) {
         else static assert(0, "Operator "~op~" not implemented");
     }
 
-    @nogc nothrow Dvector!T opOpAssign(string op)(ref Dvector!T rhs) if (op == "~"){
+    @nogc nothrow Vector!T opOpAssign(string op)(ref Vector!T rhs) if (op == "~"){
         foreach(elem; rhs)
             insertBack(elem);
         return this;
     }
 
-    @nogc nothrow Dvector!T opOpAssign(string op)(T rhs) if (op == "~"){
+    @nogc nothrow Vector!T opOpAssign(string op)(T rhs) if (op == "~"){
         insertBack(rhs);
         return this;
     }
@@ -250,7 +250,7 @@ struct Dvector(T) {
         chunks[position] = elem;
     }
 
-    void insert(ref Dvector!T other, size_t position) @nogc nothrow{
+    void insert(ref Vector!T other, size_t position) @nogc nothrow{
         const oldlen = length;
         foreach(i; 0..other.length)
             insertBack(T.init);
@@ -268,8 +268,8 @@ struct Dvector(T) {
 
     // allocates new sub vector removes elements from the original vector. partially similar to splice of javascript.
     // instead of this it is better to use myvec[start..end] without extra memory if possible.
-    Dvector!T splice(size_t index, size_t n) @nogc nothrow {
-        Dvector!T narr;
+    Vector!T splice(size_t index, size_t n) @nogc nothrow {
+        Vector!T narr;
     
         foreach(i; index..index + n)
             narr.insertBack(chunks[i]);
@@ -280,9 +280,9 @@ struct Dvector(T) {
     }
 
     // use std.range.retro if it is possible, otherwise use this and free returning vec with free 
-    Dvector!T reversed_copy() @nogc nothrow{
+    Vector!T reversed_copy() @nogc nothrow{
         T* cc_chunks = cast(T*)malloc(T.sizeof * this.capacity);
-        auto ret = Dvector!T(cc_chunks, this.total, this.capacity);
+        auto ret = Vector!T(cc_chunks, this.total, this.capacity);
         
         size_t k;
         for(size_t i = length; i-- > 0; )
@@ -328,7 +328,7 @@ private size_t nextPowerOfTwo(size_t v) @nogc nothrow {
 unittest {
     import core.stdc.stdio;
 
-    Dvector!int iv = [2, 3, 24, 6, 8]; // array literals with betterC
+    Vector!int iv = [2, 3, 24, 6, 8]; // array literals with betterC
 
     int[] view_iv = iv[2..$]; // [24, 6, 8]
 
@@ -338,7 +338,7 @@ unittest {
 
     struct Person {string name; uint score;}
 
-    Dvector!(Person) prs1;
+    Vector!(Person) prs1;
     
     auto p1 = Person("ferhat", 5);
     auto p2 = Person("Mike", 3);
@@ -350,7 +350,7 @@ unittest {
     prs1 ~= p3;
     prs1 ~= p4;
 
-    Dvector!(Person) prs2;
+    Vector!(Person) prs2;
     auto s1 = Person("Ezgi", 15);
     auto s2 = Person("Emine", 36);
     
