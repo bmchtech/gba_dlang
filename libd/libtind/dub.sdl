@@ -1,0 +1,14 @@
+name "tind"
+description "libtind"
+
+importPaths "."
+sourcePaths "."
+
+buildType "betterc" {
+    buildOptions "betterC"
+}
+
+configuration "unittest" {
+    # test runner
+    dependency "silly" version="~>1.2.0-dev.1"
+}

@@ -325,8 +325,10 @@ private size_t nextPowerOfTwo(size_t v) @nogc nothrow {
     return ++v;
 }
 
+@("vector-test-1")
 unittest {
     import core.stdc.stdio;
+    import std.stdio;
 
     Vector!int iv = [2, 3, 24, 6, 8]; // array literals with betterC
 
@@ -373,12 +375,12 @@ unittest {
     
     assert(comb[3].name == "SRV");
     
-    foreach(i, p; comb){
-        printf("%d: %s \n", i, p.name.ptr);
-    }
+    // foreach(i, p; comb){
+    //     writefln("%d: %s \n", i, p.name.ptr);
+    // }
     
     comb.free;
     prs2.free;
 
-    return 0;
+    // return 0;
 }

@@ -563,6 +563,7 @@ private size_t mix(size_t h) @safe pure nothrow @nogc {
     return h;
 }
 
+@("dict-test-1")
 unittest {
     Dict!(string, string) aa;
     scope (exit)
@@ -572,6 +573,8 @@ unittest {
 }
 
 @nogc:
+
+@("dict-test-2")
 unittest {
     import core.stdc.stdio;
     import core.stdc.time;
@@ -590,10 +593,10 @@ unittest {
             aa0.remove(i);
         }
 
-        printf("%d\n", aa0[1000]);
+        // printf("%d\n", aa0[1000]);
     }
     clock_t end = clock();
-    printf("Elapsed time: %f \n", double(end - begin) / CLOCKS_PER_SEC);
+    // printf("Elapsed time: %f \n", double(end - begin) / CLOCKS_PER_SEC);
 
     {
         Dict!(string, string) aa1;
@@ -607,13 +610,14 @@ unittest {
         aa1.Ferhat = "Kurtulmuş";
 
         foreach (pair; aa1) {
-            printf("%s -> %s", (*pair.keyp).ptr, (*pair.valp).ptr);
+            // printf("%s -> %s", (*pair.keyp).ptr, (*pair.valp).ptr);
         }
 
-        if (auto valptr = "Dan" in aa1)
-            printf("%s exists!!!!\n", (*valptr).ptr);
-        else
-            printf("does not exist!!!!\n");
+        assert("Dan" in aa1);
+        // if (auto valptr = "Dan" in aa1)
+        //     printf("%s exists!!!!\n", (*valptr).ptr);
+        // else
+        //     printf("does not exist!!!!\n");
 
         assert(aa1.remove("Ferhat") == true);
         assert(aa1.Ferhat == null);
@@ -622,21 +626,21 @@ unittest {
 
         aa1.rehash();
 
-        printf("%s\n", aa1["Stevie"].ptr);
-        printf("%s\n", aa1["Asım Can"].ptr);
-        printf("%s\n", aa1.Dan.ptr);
-        printf("%s\n", aa1["Ferhat"].ptr);
+        // printf("%s\n", aa1["Stevie"].ptr);
+        // printf("%s\n", aa1["Asım Can"].ptr);
+        // printf("%s\n", aa1.Dan.ptr);
+        // printf("%s\n", aa1["Ferhat"].ptr);
 
         auto keys = aa1.keys;
         scope (exit)
             aa1.allocator.dispose(keys);
         foreach (key; keys)
-            printf("%s -> %s\n", key.ptr, aa1[key].ptr);
+            // printf("%s -> %s\n", key.ptr, aa1[key].ptr);
 
         // byKey, byValue, and byKeyValue do not allocate
         // They use the range magic of D
         foreach (pp; aa1.byKeyValue()) {
-            printf("%s: %s\n", pp.key.ptr, pp.value.ptr);
+            // printf("%s: %s\n", pp.key.ptr, pp.value.ptr);
 
         }
 
@@ -654,13 +658,15 @@ unittest {
 
         assert(guitars[3].brand == "Gibson");
 
-        printf("%s\n", guitars[356].brand.ptr);
+        // printf("%s\n", guitars[356].brand.ptr);
 
-        if (auto valPtr = 3 in guitars)
-            printf("%s\n", (*valPtr).brand.ptr);
+        assert(3 in guitars);
+        // if (auto valPtr = 3 in guitars)
+        //     printf("%s\n", (*valPtr).brand.ptr);
     }
 }
 
+@("dict-test-3")
 unittest {
     Dict!(string, int) aa;
     scope (exit)
@@ -678,12 +684,14 @@ unittest {
     assert(aa.bar == 2);
 }
 
+@("dict-test-4")
 // Test "in" works for AA without allocated storage.
 unittest {
     Dict!(int, int) emptyMap;
     assert(0 !in emptyMap);
 }
 
+@("dict-test-5")
 // Try to force a memory leak - issue #5
 unittest {
     struct S {
@@ -702,7 +710,7 @@ unittest {
 
     import core.stdc.stdio;
 
-    printf(".x=%d .y%d %s\n", aas[100].x, aas[100].y, aas[100].txt.ptr);
+    // printf(".x=%d .y%d %s\n", aas[100].x, aas[100].y, aas[100].txt.ptr);
 
     for (int i = 1024; i < 2048; i++) {
         aas.remove(i);
