@@ -9,12 +9,24 @@ import libtind.ds.vector;
 extern (C) @nogc {
     struct Heap(T) {
         Vector!T vec;
+        bool initialized = false;
+
+        void initialize() {
+            vec.clear();
+            // insert the [0] into the heap
+            vec.push_front(0);
+            initialized = true;
+        }
 
         void clear() {
-            vec.clear();
+            initialize();
         }
 
         void add(T val) {
+            // init if needed
+            if (vec.length == 0)
+                initialize();
+
             vec.push_back(val);
             sift_up(vec.length - 1);
         }
@@ -29,11 +41,17 @@ extern (C) @nogc {
         }
 
         T peek_min() {
-            return vec[0];
+            if (vec.length <= 1) { // heap doesn't have a min
+                return T.init;
+            }
+            return vec[1];
         }
 
         T remove_min() {
-            return remove_at(0);
+            if (vec.length <= 1) { // heap doesn't have a min
+                return T.init;
+            }
+            return remove_at(1);
         }
 
         void sift_up(size_t index) {
@@ -74,7 +92,10 @@ extern (C) @nogc {
         }
 
         @property size_t count() {
-            return vec.length;
+            if (!initialized)
+                return 0;
+
+            return vec.length - 1;
         }
 
         void free() {
@@ -87,7 +108,7 @@ extern (C) @nogc {
     import std.stdio;
 
     Heap!int h1;
-    writefln("%s", h1.vec);
+    writefln("%s", h1.vec[]);
 
     // insert some values
     h1.add(4);
@@ -96,7 +117,8 @@ extern (C) @nogc {
     h1.add(3);
 
     // check if the heap is valid
-    writefln("%s", h1.vec);
+    // writefln("%s", h1.vec[]);
+    // writefln("%s", h1.peek_min());
     assert(h1.peek_min() == 1);
     assert(h1.remove_min() == 1);
     assert(h1.peek_min() == 2);
@@ -107,6 +129,7 @@ extern (C) @nogc {
     assert(h1.remove_min() == 4);
 
     // check count
+    writefln("%s", h1.vec[]);
     assert(h1.count == 0);
 
     // try new heap
@@ -160,6 +183,8 @@ extern (C) @nogc {
     assert(h3.remove_min() == 32);
     assert(h3.peek_min() == 40);
     assert(h3.remove_min() == 40);
+    assert(h3.peek_min() == 79);
+    assert(h3.remove_min() == 79);
     assert(h3.peek_min() == 79);
     assert(h3.remove_min() == 79);
     assert(h3.peek_min() == 79);

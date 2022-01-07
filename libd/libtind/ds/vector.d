@@ -7,6 +7,7 @@ version(LDC){
 }
 
 import core.stdc.stdlib;
+import core.stdc.stdio;
 import core.stdc.string;
 
 private enum CAPACITY = 4;
