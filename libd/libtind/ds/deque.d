@@ -6,125 +6,126 @@ import core.stdc.stdio;
 
 import libtind.util;
 
-@nogc:
-struct Deque(T) {
-    alias NodePtr = Node!T*;
-    struct Node(T) {
-        T data;
-        NodePtr link_fw;
-        NodePtr link_bk;
-    }
-
-    NodePtr head = null;
-    NodePtr tail = null;
-    int count = 0;
-
-    NodePtr create_node(T item) {
-        NodePtr node = tind_alloc!(Node!T)();
-
-        node.data = item;
-        node.link_fw = null;
-        node.link_bk = null;
-        count++;
-
-        return node;
-    }
-
-    void push_front(T item) {
-        auto node = create_node(item);
-
-        // insert the node and initialize forward and backward links
-        if (!head) {
-            head = node;
-        } else {
-            node.link_fw = head;
-            node.link_bk = null;
-            head.link_bk = node;
-            head = node;
+extern (C) @nogc {
+    struct Deque(T) {
+        alias NodePtr = Node!T*;
+        struct Node(T) {
+            T data;
+            NodePtr link_fw;
+            NodePtr link_bk;
         }
-        if (!tail) {
-            tail = node;
-        }
-    }
 
-    void push_back(T item) {
-        auto node = create_node(item);
-        // writefln("push_back: %d", count);
+        NodePtr head = null;
+        NodePtr tail = null;
+        int count = 0;
 
-        // insert the node and initialize forward and backward links
-        if (!tail) {
-            tail = node;
-        } else {
+        NodePtr create_node(T item) {
+            NodePtr node = tind_alloc!(Node!T)();
+
+            node.data = item;
             node.link_fw = null;
-            node.link_bk = tail;
-            tail.link_fw = node;
-            tail = node;
-        }
-        if (!head) {
-            head = node;
-        }
-    }
+            node.link_bk = null;
+            count++;
 
-    void delete_node(NodePtr node) {
-        // insert the node and fix forward and backward links
-        // handle fixing the ends if necessary
-
-        if (node == head) {
-            head = node.link_fw;
-        } else if (node == tail) {
-            tail = node.link_bk;
-        } else {
-            node.link_bk.link_fw = node.link_fw; // fix prev node
-            node.link_fw.link_bk = node.link_bk; // fix next node
+            return node;
         }
 
-        // free node
-        tind_free(node);
-        count--;
+        void push_front(T item) {
+            auto node = create_node(item);
 
-        if (count == 0) {
-            head = null;
+            // insert the node and initialize forward and backward links
+            if (!head) {
+                head = node;
+            } else {
+                node.link_fw = head;
+                node.link_bk = null;
+                head.link_bk = node;
+                head = node;
+            }
+            if (!tail) {
+                tail = node;
+            }
+        }
+
+        void push_back(T item) {
+            auto node = create_node(item);
+            // writefln("push_back: %d", count);
+
+            // insert the node and initialize forward and backward links
+            if (!tail) {
+                tail = node;
+            } else {
+                node.link_fw = null;
+                node.link_bk = tail;
+                tail.link_fw = node;
+                tail = node;
+            }
+            if (!head) {
+                head = node;
+            }
+        }
+
+        void delete_node(NodePtr node) {
+            // insert the node and fix forward and backward links
+            // handle fixing the ends if necessary
+
+            if (node == head) {
+                head = node.link_fw;
+            } else if (node == tail) {
+                tail = node.link_bk;
+            } else {
+                node.link_bk.link_fw = node.link_fw; // fix prev node
+                node.link_fw.link_bk = node.link_bk; // fix next node
+            }
+
+            // free node
+            tind_free(node);
+            count--;
+
+            if (count == 0) {
+                head = null;
+                tail = null;
+            }
+
+            // writefln("delete count: %d", count);
+        }
+
+        T pop_front() {
+            if (!head) {
+                return T.init;
+            }
+
+            auto node = head;
+            auto item = node.data;
+
+            delete_node(node);
+
+            return item;
+        }
+
+        T pop_back() {
+            if (!tail) {
+                return T.init;
+            }
+
+            auto node = tail;
+            auto item = node.data;
+
+            delete_node(node);
+
+            return item;
+        }
+
+        void clear() {
+            // writefln("clear: %d", count);
+            // writefln("head: %s", head);
+            // writefln("tail: %s", tail);
+
+            while (head) {
+                delete_node(head);
+            }
             tail = null;
         }
-
-        // writefln("delete count: %d", count);
-    }
-
-    T pop_front() {
-        if (!head) {
-            return T.init;
-        }
-
-        auto node = head;
-        auto item = node.data;
-
-        delete_node(node);
-
-        return item;
-    }
-
-    T pop_back() {
-        if (!tail) {
-            return T.init;
-        }
-
-        auto node = tail;
-        auto item = node.data;
-
-        delete_node(node);
-
-        return item;
-    }
-
-    void clear() {
-        // writefln("clear: %d", count);
-        // writefln("head: %s", head);
-        // writefln("tail: %s", tail);
-
-        while (head) {
-            delete_node(head);
-        }
-        tail = null;
     }
 }
 
@@ -189,6 +190,14 @@ unittest {
     assert(d2p1 == 1);
     assert(d2p2 == 9);
     assert(d2p3 == 11);
+
+    // clean up
+    d2.clear();
+
+    // ensure it's empty
+    assert(d2.count == 0);
+    assert(d2.head == null);
+    assert(d2.tail == null);
 
     // now try another one
     Deque!int d3;
