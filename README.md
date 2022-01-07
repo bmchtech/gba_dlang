@@ -34,3 +34,7 @@ mgba-qt GBADlang.gba
 this is about trying to read thread-local storage (TLS) for global variables. on a bare metal system like the GBA it's easier to just not worry about TLS and just go with thread-global storage.
 
 if you get these errors, make sure you prefix your global variables with `__gshared`. this enables default C-style behavior of thread global storage.
+
+### errors about `TLS reference ... mismatches non-TLS definition ... section .bss`
+
+this means you're using a non-TLS variable with a TLS reference. this can often happen if you're individually compiling objects and then linking after you change the thread storage type of your variable. the solution is to just clean all intermediate object files and rebuild.
