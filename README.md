@@ -26,3 +26,11 @@ make clean
 make build
 mgba-qt GBADlang.gba
 ```
+
+## troubleshooting
+
+### errors about `__aeabi_read_tp`
+
+this is about trying to read thread-local storage (TLS) for global variables. on a bare metal system like the GBA it's easier to just not worry about TLS and just go with thread-global storage.
+
+if you get these errors, make sure you prefix your global variables with `__gshared`. this enables default C-style behavior of thread global storage.
