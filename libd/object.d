@@ -170,40 +170,43 @@ version (LDC) {
   }
 }
 
-static if (false) /* <-- remove to use custom assert handler */ debug {
-  private static extern(C) int printf(
-    scope const(char*) format, ...
-  ) nothrow @nogc;
+/** handling of asserts **/
+// version(DEBUG) {
+//   // private static extern(C) int printf(
+//   //   scope const(char*) format, ...
+//   // ) nothrow @nogc;
 
-  private extern(C) bool aptMainLoop()  nothrow @nogc;
-  private extern(C) void hidScanInput() nothrow @nogc;
-  private extern(C) uint hidKeysDown()  nothrow @nogc;
+//   // private extern(C) bool aptMainLoop()  nothrow @nogc;
+//   // private extern(C) void hidScanInput() nothrow @nogc;
+//   // private extern(C) uint hidKeysDown()  nothrow @nogc;
+//   private extern(C) nothrow @nogc {
+//     void mgba_printf (int level, const(char)* ptr, ...);
+//     void exit(int status);
+//   }
 
-  private extern(C) void exit(
-    int status
-  ) nothrow @nogc;
+//   /**
+//    * In recent devkitARM updates, one of the things linked in defines __assert for some reason.
+//    * If you would like to use this custom assert, you have to weaken theirs so that the linker
+//    * will choose this one like so:
+//    * sudo $DEVKITARM/bin/arm-none-eabi-objcopy --weaken-symbol=__assert $DEVKITARM/arm-none-eabi/lib/armv6k/fpu/libg.a /opt/devkitpro/devkitARM/arm-none-eabi/lib/armv6k/fpu/libg.a
+//    **/
+//   extern (C) void __assert(const char* msg_, const char* file_, int line) @trusted {
+//     mgba_printf(0, "Assert failed in file %s at line %d: %s\n", file_, line, msg_);
+//     exit(1);
 
-  /**
-   * In recent devkitARM updates, one of the things linked in defines __assert for some reason.
-   * If you would like to use this custom assert, you have to weaken theirs so that the linker
-   * will choose this one like so:
-   * sudo $DEVKITARM/bin/arm-none-eabi-objcopy --weaken-symbol=__assert $DEVKITARM/arm-none-eabi/lib/armv6k/fpu/libg.a /opt/devkitpro/devkitARM/arm-none-eabi/lib/armv6k/fpu/libg.a
-   **/
-  extern (C) void __assert(const char* msg_, const char* file_, int line) @trusted {
-    printf("\x1b[1;1HAssert failed in file %s at line %d: %s\x1b[K", file_, line, msg_);
+//     // printf("\x1b[1;1HAssert failed in file %s at line %d: %s\x1b[K", file_, line, msg_);
+//     // printf("\n\nPress Start to exit...\n");
 
-    printf("\n\nPress Start to exit...\n");
+//     // //wait for key press and exit (so we can read the error message)
+//     // while (aptMainLoop()) {
+//     //   hidScanInput();
 
-    //wait for key press and exit (so we can read the error message)
-    while (aptMainLoop()) {
-      hidScanInput();
-
-      if ((hidKeysDown() & (1<<3))) {
-        exit(0);
-      }
-    }
-  }
-}
+//     //   if ((hidKeysDown() & (1<<3))) {
+//     //     exit(0);
+//     //   }
+//     // }
+//   }
+// }
 
 // From https://github.com/dlang/druntime/commit/96408ecb775f06809314fa3eded3158d60b40e31
 
