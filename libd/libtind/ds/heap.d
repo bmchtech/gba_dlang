@@ -7,9 +7,18 @@ import libtind.util;
 import libtind.ds.vector;
 
 extern (C) @nogc {
+    bool less_than(T)(T a, T b) {
+        return a < b;
+    }
+
+    bool greater_than(T)(T a, T b) {
+        return a > b;
+    }
+
     struct Heap(T) {
         Vector!T vec;
         bool initialized = false;
+        // bool function(T, T) compare = &less_than;
 
         void initialize() {
             vec.clear();
@@ -68,8 +77,8 @@ extern (C) @nogc {
 
         void sift_down(size_t index) {
             while ((index * 2) < vec.length) {
-                auto min_child = least_child(index);
-                if (vec[index] > vec[min_child]) {
+                auto min_child = compare_child(index);
+                if (vec[index] > vec[min_child]) { // check if node is greater than child
                     // swap
                     auto tmp = vec[index];
                     vec[index] = vec[min_child];
@@ -79,11 +88,11 @@ extern (C) @nogc {
             }
         }
 
-        size_t least_child(size_t index) {
+        size_t compare_child(size_t index) {
             if ((index * 2 + 1) > vec.length - 1) { // check if right child is outside vector bounds
                 return index * 2;
             } else {
-                if (vec[index * 2] < vec[index * 2 + 1]) {
+                if (vec[index * 2] < vec[index * 2 + 1]) { // check if left child is less than right child
                     return index * 2;
                 } else {
                     return index * 2 + 1;
