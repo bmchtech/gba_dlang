@@ -117,7 +117,7 @@ extern (C) @nogc {
     import std.stdio;
 
     Heap!int h1;
-    writefln("%s", h1.vec[]);
+    // writefln("%s", h1.vec[]);
 
     // insert some values
     h1.add(4);
@@ -138,8 +138,8 @@ extern (C) @nogc {
     assert(h1.remove_min() == 4);
 
     // check count
-    writefln("%s", h1.vec[]);
     assert(h1.count == 0);
+    h1.free();
 
     // try new heap
     Heap!int h2;
@@ -171,6 +171,7 @@ extern (C) @nogc {
 
     // check count
     assert(h2.count == 0);
+    h2.free();
 
     // try a new heap, this time test dupes
     Heap!int h3;
@@ -205,5 +206,5 @@ extern (C) @nogc {
 
     // check count
     assert(h3.count == 0);
-
+    h3.free();
 }

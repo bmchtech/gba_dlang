@@ -71,6 +71,7 @@ unittest {
 
     // ensure empty
     assert(s1.count == 0);
+    s1.free();
 
     // try a new set
     Set!int s2;
@@ -101,4 +102,5 @@ unittest {
 
     // check count
     assert(s2.count == 5);
+    s2.free();
 }

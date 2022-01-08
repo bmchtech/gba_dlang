@@ -126,6 +126,10 @@ extern (C) @nogc {
             }
             tail = null;
         }
+
+        void free() {
+            clear();
+        }
     }
 }
 
@@ -149,6 +153,8 @@ unittest {
     assert(d1.head == null, "d1.head != null");
     assert(d1.tail == null, "d1.tail != null");
     assert(d1.count == 0, "d1.count != 0");
+
+    d1.free();
 
     // make a new one
     Deque!int d2;
@@ -198,6 +204,7 @@ unittest {
     assert(d2.count == 0);
     assert(d2.head == null);
     assert(d2.tail == null);
+    d2.free();
 
     // now try another one
     Deque!int d3;
@@ -235,4 +242,6 @@ unittest {
     assert(d3.count == 0);
     assert(d3.head == null);
     assert(d3.tail == null);
+
+    d3.free();
 }
