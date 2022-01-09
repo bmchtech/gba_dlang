@@ -515,13 +515,18 @@ void dma3_fill (void* dst, uint src, uint size)
 //! Quick (and very dirty) pseudo-random number generator 
 /*! \return random in range [0,8000h>
 */
-int qran ();
+int qran ()
+{	
+	__qran_seed= 1664525*__qran_seed+1013904223;
+	return (__qran_seed>>16) & QRAN_MAX;
+}
 
 //! Ranged random number
 /*! \return random in range [\a min, \a max>
 *	\note (max-min) must be lower than 8000h
 */
-int qran_range (int min, int max);
+int qran_range (int min, int max)
+{	return (qran()*(max-min)>>QRAN_SHIFT)+min;		}
 
 // --- Timer ----------------------------------------------------------
 
