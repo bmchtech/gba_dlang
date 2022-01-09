@@ -265,7 +265,7 @@ fnptr* REG_ISR_MAIN() { return cast(fnptr*) (REG_BASE - 0x0004); }
 //! \name Display registers
 //\{
 // enum REG_DISPCNT = *cast(vu32*) REG_BASE + 0x0000; //!< Display control
-vu32* REG_DISPCNT() { return cast(vu32*) (REG_BASE + 0x0000); }
+vu16* REG_DISPCNT() { return cast(vu16*) (REG_BASE + 0x0000); }
 // enum REG_DISPSTAT = *cast(vu16*) REG_BASE + 0x0004; //!< Display status
 vu16* REG_DISPSTAT() { return cast(vu16*) (REG_BASE + 0x0004); }
 // enum REG_VCOUNT = *cast(vu16*) REG_BASE + 0x0006; //!< Scanline count
