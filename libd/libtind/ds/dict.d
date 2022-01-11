@@ -116,7 +116,7 @@ private {
             return true;
         }
 
-        static Mallocator instance;
+        __gshared static Mallocator instance;
     }
 
     T[] makeArray(T, Allocator)(auto ref Allocator alloc, size_t length) {
