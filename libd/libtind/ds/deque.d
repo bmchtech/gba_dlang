@@ -130,6 +130,10 @@ extern (C) @nogc {
         void free() {
             clear();
         }
+
+        ~this() {
+            free();
+        }
     }
 }
 
@@ -204,7 +208,6 @@ unittest {
     assert(d2.count == 0);
     assert(d2.head == null);
     assert(d2.tail == null);
-    d2.free();
 
     // now try another one
     Deque!int d3;
@@ -242,6 +245,4 @@ unittest {
     assert(d3.count == 0);
     assert(d3.head == null);
     assert(d3.tail == null);
-
-    d3.free();
 }

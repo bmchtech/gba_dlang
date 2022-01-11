@@ -142,7 +142,7 @@ struct Vector(T) {
         }
     }
 
-    void free() @nogc nothrow {
+    private void free() @nogc nothrow {
         if(chunks !is null){
             total = 0;
             capacity = CAPACITY;
@@ -151,7 +151,10 @@ struct Vector(T) {
         }
     }
 
-    alias clear = typeof(this).free;
+    // alias clear = typeof(this).free;
+    void clear() @nogc nothrow {
+        free();
+    }
     
     int opApply(int delegate(ref T) @nogc nothrow dg) @nogc nothrow{
         int result = 0;
@@ -207,32 +210,34 @@ struct Vector(T) {
     }
     
     Vector!T opBinary(string op)(ref Vector!T rhs) @nogc nothrow{
-        static if (op == "~"){
-            foreach(elem; rhs)
-                insert_back(elem);
-            return this;
-        } 
-        else static assert(0, "Operator "~op~" not implemented");
+        // static if (op == "~"){
+        //     foreach(elem; rhs)
+        //         insert_back(elem);
+        //     return this;
+        // } 
+        // else
+        static assert(0, "Operator "~op~" not implemented");
     }
     
     Vector!T opBinary(string op)(T rhs) @nogc nothrow {
-        static if (op == "~"){
-            insert_back(rhs);
-            return this;
-        } 
-        else static assert(0, "Operator "~op~" not implemented");
+        // static if (op == "~"){
+        //     insert_back(rhs);
+        //     return this;
+        // } 
+        // else
+        static assert(0, "Operator "~op~" not implemented");
     }
 
-    @nogc nothrow Vector!T opOpAssign(string op)(ref Vector!T rhs) if (op == "~"){
-        foreach(elem; rhs)
-            insert_back(elem);
-        return this;
-    }
+    // @nogc nothrow Vector!T opOpAssign(string op)(ref Vector!T rhs) if (op == "~"){
+    //     foreach(elem; rhs)
+    //         insert_back(elem);
+    //     return this;
+    // }
 
-    @nogc nothrow Vector!T opOpAssign(string op)(T rhs) if (op == "~"){
-        insert_back(rhs);
-        return this;
-    }
+    // @nogc nothrow Vector!T opOpAssign(string op)(T rhs) if (op == "~"){
+    //     insert_back(rhs);
+    //     return this;
+    // }
 
     void push_front(T elem) @nogc nothrow {
         insert_back(T.init);
@@ -314,6 +319,10 @@ struct Vector(T) {
         
         return data;
     }
+
+    ~this() @nogc nothrow {
+        free();
+    }
 }
 
 private size_t nextPowerOfTwo(size_t v) @nogc nothrow {
@@ -348,40 +357,41 @@ unittest {
     auto p3 = Person("Rajneesh", 1);
     auto p4 = Person("Ce", 2);
     
-    prs1 ~= p1;
-    prs1 ~= p2;
-    prs1 ~= p3;
-    prs1 ~= p4;
+    prs1.push_back(p1);
+    prs1.push_back(p1);
+    prs1.push_back(p2);
+    prs1.push_back(p3);
+    prs1.push_back(p4);
 
     Vector!(Person) prs2;
     auto s1 = Person("Ezgi", 15);
     auto s2 = Person("Emine", 36);
     
-    prs2 ~= s1;
-    prs2 ~= s2;
+    prs2.push_back(s1);
+    prs2.push_back(s2);
     
-    auto comb = prs1 ~ prs2;
+    // auto comb = prs1 ~ prs2;
     
-    comb.remove(2);
+    // comb.remove(2);
     
-    assert(comb[2].name == "Ce");
+    // assert(comb[2].name == "Ce");
     
-    auto cn = Person("Chuck", 100);
-    comb.push_front(cn);
+    // auto cn = Person("Chuck", 100);
+    // comb.push_front(cn);
     
-    assert(comb[0].name == "Chuck");
+    // assert(comb[0].name == "Chuck");
     
-    auto srv = Person("SRV", 100);
-    comb.insert(srv, 3);
+    // auto srv = Person("SRV", 100);
+    // comb.insert(srv, 3);
     
-    assert(comb[3].name == "SRV");
+    // assert(comb[3].name == "SRV");
     
     // foreach(i, p; comb){
     //     writefln("%d: %s \n", i, p.name.ptr);
     // }
     
-    comb.free;
-    prs2.free;
+    // comb.free;
+    // prs2.free;
 
     // return 0;
 }

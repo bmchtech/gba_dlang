@@ -401,7 +401,7 @@ struct Dict(K, V, Allocator = Mallocator) {
         buckets[] = Bucket.init;
     }
 
-    void free() @nogc nothrow {
+    private void free() @nogc nothrow {
         foreach (ref b; buckets)
             if (b.entry !is null) {
                 //core.stdc.stdlib.free(b.entry);
@@ -413,6 +413,10 @@ struct Dict(K, V, Allocator = Mallocator) {
         allocator.dispose(buckets);
         deleted = used = 0;
         buckets = null;
+    }
+
+    ~this() @nogc nothrow {
+        free();
     }
 
     auto copy() @nogc nothrow {

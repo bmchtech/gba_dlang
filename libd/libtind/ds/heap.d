@@ -118,10 +118,6 @@ extern (C) @nogc {
 
             return vec.length - 1;
         }
-
-        void free() {
-            vec.free();
-        }
     }
 }
 
@@ -153,7 +149,6 @@ alias IntHeap = Heap!int;
 
     // check count
     assert(h1.count == 0);
-    h1.free();
 
     // try new heap
     IntHeap h2;
@@ -185,7 +180,6 @@ alias IntHeap = Heap!int;
 
     // check count
     assert(h2.count == 0);
-    h2.free();
 
     // try a new heap, this time test dupes
     IntHeap h3;
@@ -220,10 +214,9 @@ alias IntHeap = Heap!int;
 
     // check count
     assert(h3.count == 0);
-    h3.free();
 }
 
-@("heap-test-1") unittest {
+@("heap-test-2") unittest {
     // now test with values inside the nodes
     import std.stdio;
 
