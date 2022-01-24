@@ -255,148 +255,150 @@ enum sram_mem = cast(ubyte*) MEM_SRAM;
 
 // 0300:7ff[y] is mirrored at 03ff:fff[y], which is why this works out:
 // enum REG_IFBIOS = *(cast(vu16*) REG_BASE - 0x0008); //!< IRQ ack for IntrWait functions
-vu16* REG_IFBIOS() { return cast(vu16*) (REG_BASE - 0x0008); }
-// enum REG_RESET_DST = *cast(vu16*) REG_BASE - 0x0006; //!< Destination for after SoftReset
-vu16* REG_RESET_DST() { return cast(vu16*) (REG_BASE - 0x0006); }
+
+enum REG_RESET_DST = cast(vu16*)(REG_BASE - 0x0006); //!< Destination for after SoftReset
+
 // enum REG_ISR_MAIN = *(cast(fnptr*) REG_BASE - 0x0004); //!< IRQ handler address
-fnptr* REG_ISR_MAIN() { return cast(fnptr*) (REG_BASE - 0x0004); }
+fnptr* REG_ISR_MAIN() {
+	return cast(fnptr*)(REG_BASE - 0x0004);
+}
 //\}
 
 //! \name Display registers
 //\{
-// enum REG_DISPCNT = *cast(vu32*) REG_BASE + 0x0000; //!< Display control
-vu16* REG_DISPCNT() { return cast(vu16*) (REG_BASE + 0x0000); }
-// enum REG_DISPSTAT = *cast(vu16*) REG_BASE + 0x0004; //!< Display status
-vu16* REG_DISPSTAT() { return cast(vu16*) (REG_BASE + 0x0004); }
-// enum REG_VCOUNT = *cast(vu16*) REG_BASE + 0x0006; //!< Scanline count
-vu16* REG_VCOUNT() { return cast(vu16*) (REG_BASE + 0x0006); }
+enum REG_DISPCNT = cast(vu16*)(REG_BASE + 0x0000); //!< Display control
+enum REG_DISPSTAT = cast(vu16*)(REG_BASE + 0x0004); //!< Display status
+
+enum REG_VCOUNT = cast(vu16*)(REG_BASE + 0x0006); //!< Scanline count
+
 //\}
 
 //! \name Background control registers
 //\{
-// enum REG_BGCNT = cast(vu16*) REG_BASE + 0x0008; //!< Bg control array
-vu16* REG_BGCNT() { return cast(vu16*) (REG_BASE + 0x0008); }
+enum REG_BGCNT = cast(vu16*)(REG_BASE + 0x0008); //!< Bg control array
 
-// enum REG_BG0CNT = *cast(vu16*) REG_BASE + 0x0008; //!< Bg0 control
-vu16* REG_BG0CNT() { return cast(vu16*) (REG_BASE + 0x0008); }
-// enum REG_BG1CNT = *cast(vu16*) REG_BASE + 0x000A; //!< Bg1 control
-vu16* REG_BG1CNT() { return cast(vu16*) (REG_BASE + 0x000A); }
-// enum REG_BG2CNT = *cast(vu16*) REG_BASE + 0x000C; //!< Bg2 control
-vu16* REG_BG2CNT() { return cast(vu16*) (REG_BASE + 0x000C); }
-// enum REG_BG3CNT = *cast(vu16*) REG_BASE + 0x000E; //!< Bg3 control
-vu16* REG_BG3CNT() { return cast(vu16*) (REG_BASE + 0x000E); }
+enum REG_BG0CNT = cast(vu16*)(REG_BASE + 0x0008); //!< Bg0 control
+
+enum REG_BG1CNT = cast(vu16*)(REG_BASE + 0x000A); //!< Bg1 control
+
+enum REG_BG2CNT = cast(vu16*)(REG_BASE + 0x000C); //!< Bg2 control
+
+enum REG_BG3CNT = cast(vu16*)(REG_BASE + 0x000E); //!< Bg3 control
+
 //\}
 
 //! \name Regular background scroll registers. (write only!)
 //\{
 // enum REG_BG_OFS = cast(BG_POINT*) REG_BASE + 0x0010; //!< Bg scroll array
-BG_POINT* REG_BG_OFS() { return (cast(BG_POINT*) REG_BASE + 0x0010); }
+BG_POINT* REG_BG_OFS() {
+	return (cast(BG_POINT*) REG_BASE + 0x0010);
+}
 
-// enum REG_BG0HOFS = *cast(vu16*) REG_BASE + 0x0010; //!< Bg0 horizontal scroll
-vu16* REG_BG0HOFS() { return cast(vu16*) (REG_BASE + 0x0010); }
-// enum REG_BG0VOFS = *cast(vu16*) REG_BASE + 0x0012; //!< Bg0 vertical scroll
-vu16* REG_BG0VOFS() { return cast(vu16*) (REG_BASE + 0x0012); }
-// enum REG_BG1HOFS = *cast(vu16*) REG_BASE + 0x0014; //!< Bg1 horizontal scroll
-vu16* REG_BG1HOFS() { return cast(vu16*) (REG_BASE + 0x0014); }
-// enum REG_BG1VOFS = *cast(vu16*) REG_BASE + 0x0016; //!< Bg1 vertical scroll
-vu16* REG_BG1VOFS() { return cast(vu16*) (REG_BASE + 0x0016); }
-// enum REG_BG2HOFS = *cast(vu16*) REG_BASE + 0x0018; //!< Bg2 horizontal scroll
-vu16* REG_BG2HOFS() { return cast(vu16*) (REG_BASE + 0x0018); }
-// enum REG_BG2VOFS = *cast(vu16*) REG_BASE + 0x001A; //!< Bg2 vertical scroll
-vu16* REG_BG2VOFS() { return cast(vu16*) (REG_BASE + 0x001A); }
-// enum REG_BG3HOFS = *cast(vu16*) REG_BASE + 0x001C; //!< Bg3 horizontal scroll
-vu16* REG_BG3HOFS() { return cast(vu16*) (REG_BASE + 0x001C); }
-// enum REG_BG3VOFS = *cast(vu16*) REG_BASE + 0x001E; //!< Bg3 vertical scroll
-vu16* REG_BG3VOFS() { return cast(vu16*) (REG_BASE + 0x001E); }
+enum REG_BG0HOFS = cast(vu16*)(REG_BASE + 0x0010); //!< Bg0 horizontal scroll
+
+enum REG_BG0VOFS = cast(vu16*)(REG_BASE + 0x0012); //!< Bg0 vertical scroll
+
+enum REG_BG1HOFS = cast(vu16*)(REG_BASE + 0x0014); //!< Bg1 horizontal scroll
+
+enum REG_BG1VOFS = cast(vu16*)(REG_BASE + 0x0016); //!< Bg1 vertical scroll
+
+enum REG_BG2HOFS = cast(vu16*)(REG_BASE + 0x0018); //!< Bg2 horizontal scroll
+
+enum REG_BG2VOFS = cast(vu16*)(REG_BASE + 0x001A); //!< Bg2 vertical scroll
+
+enum REG_BG3HOFS = cast(vu16*)(REG_BASE + 0x001C); //!< Bg3 horizontal scroll
+
+enum REG_BG3VOFS = cast(vu16*)(REG_BASE + 0x001E); //!< Bg3 vertical scroll
+
 //\}
 
 //! \name Affine background parameters. (write only!)
 //\{
 // enum REG_BG_AFFINE = cast(BG_AFFINE*) REG_BASE + 0x0000; //!< Bg affine array
-ref BG_AFFINE REG_BG_AFFINE() { return *cast(BG_AFFINE*) (REG_BASE + 0x0000); }
+ref BG_AFFINE REG_BG_AFFINE() {
+	return *cast(BG_AFFINE*)(REG_BASE + 0x0000);
+}
 
-// enum REG_BG2PA = *cast(vs16*) REG_BASE + 0x0020; //!< Bg2 matrix.pa
-vs16* REG_BG2PA() { return cast(vs16*) (REG_BASE + 0x0020); }
-// enum REG_BG2PB = *cast(vs16*) REG_BASE + 0x0022; //!< Bg2 matrix.pb
-vs16* REG_BG2PB() { return cast(vs16*) (REG_BASE + 0x0022); }
-// enum REG_BG2PC = *cast(vs16*) REG_BASE + 0x0024; //!< Bg2 matrix.pc
-vs16* REG_BG2PC() { return cast(vs16*) (REG_BASE + 0x0024); }
-// enum REG_BG2PD = *cast(vs16*) REG_BASE + 0x0026; //!< Bg2 matrix.pd
-vs16* REG_BG2PD() { return cast(vs16*) (REG_BASE + 0x0026); }
-// enum REG_BG2X = *cast(vs32*) REG_BASE + 0x0028; //!< Bg2 x scroll
-vs32* REG_BG2X() { return cast(vs32*) (REG_BASE + 0x0028); }
-// enum REG_BG2Y = *cast(vs32*) REG_BASE + 0x002C; //!< Bg2 y scroll
-vs32* REG_BG2Y() { return cast(vs32*) (REG_BASE + 0x002C); }
-// enum REG_BG3PA = *cast(vs16*) REG_BASE + 0x0030; //!< Bg3 matrix.pa.
-vs16* REG_BG3PA() { return cast(vs16*) (REG_BASE + 0x0030); }
-// enum REG_BG3PB = *cast(vs16*) REG_BASE + 0x0032; //!< Bg3 matrix.pb
-vs16* REG_BG3PB() { return cast(vs16*) (REG_BASE + 0x0032); }
-// enum REG_BG3PC = *cast(vs16*) REG_BASE + 0x0034; //!< Bg3 matrix.pc
-vs16* REG_BG3PC() { return cast(vs16*) (REG_BASE + 0x0034); }
-// enum REG_BG3PD = *cast(vs16*) REG_BASE + 0x0036; //!< Bg3 matrix.pd
-vs16* REG_BG3PD() { return cast(vs16*) (REG_BASE + 0x0036); }
-// enum REG_BG3X = *cast(vs32*) REG_BASE + 0x0038; //!< Bg3 x scroll
-vs32* REG_BG3X() { return cast(vs32*) (REG_BASE + 0x0038); }
-// enum REG_BG3Y = *cast(vs32*) REG_BASE + 0x003C; //!< Bg3 y scroll
-vs32* REG_BG3Y() { return cast(vs32*) (REG_BASE + 0x003C); }
+enum REG_BG2PA = cast(vs16*)(REG_BASE + 0x0020); //!< Bg2 matrix.pa
+
+enum REG_BG2PB = cast(vs16*)(REG_BASE + 0x0022); //!< Bg2 matrix.pb
+
+enum REG_BG2PC = cast(vs16*)(REG_BASE + 0x0024); //!< Bg2 matrix.pc
+
+enum REG_BG2PD = cast(vs16*)(REG_BASE + 0x0026); //!< Bg2 matrix.pd
+
+enum REG_BG2X = cast(vs32*)(REG_BASE + 0x0028); //!< Bg2 x scroll
+
+enum REG_BG2Y = cast(vs32*)(REG_BASE + 0x002C); //!< Bg2 y scroll
+
+enum REG_BG3PA = cast(vs16*)(REG_BASE + 0x0030); //!< Bg3 matrix.pa.
+
+enum REG_BG3PB = cast(vs16*)(REG_BASE + 0x0032); //!< Bg3 matrix.pb
+
+enum REG_BG3PC = cast(vs16*)(REG_BASE + 0x0034); //!< Bg3 matrix.pc
+
+enum REG_BG3PD = cast(vs16*)(REG_BASE + 0x0036); //!< Bg3 matrix.pd
+
+enum REG_BG3X = cast(vs32*)(REG_BASE + 0x0038); //!< Bg3 x scroll
+
+enum REG_BG3Y = cast(vs32*)(REG_BASE + 0x003C); //!< Bg3 y scroll
+
 //\}
 
 //! \name Windowing registers
 //\{
-// enum REG_WIN0H = *cast(vu16*) REG_BASE + 0x0040; //!< win0 right, left (0xLLRR)
-vu16* REG_WIN0H() { return cast(vu16*) (REG_BASE + 0x0040); }
-// enum REG_WIN1H = *cast(vu16*) REG_BASE + 0x0042; //!< win1 right, left (0xLLRR)
-vu16* REG_WIN1H() { return cast(vu16*) (REG_BASE + 0x0042); }
-// enum REG_WIN0V = *cast(vu16*) REG_BASE + 0x0044; //!< win0 bottom, top (0xTTBB)
-vu16* REG_WIN0V() { return cast(vu16*) (REG_BASE + 0x0044); }
-// enum REG_WIN1V = *cast(vu16*) REG_BASE + 0x0046; //!< win1 bottom, top (0xTTBB)
-vu16* REG_WIN1V() { return cast(vu16*) (REG_BASE + 0x0046); }
-// enum REG_WININ = *cast(vu16*) REG_BASE + 0x0048; //!< win0, win1 control
-vu16* REG_WININ() { return cast(vu16*) (REG_BASE + 0x0048); }
-// enum REG_WINOUT = *cast(vu16*) REG_BASE + 0x004A; //!< winOut, winObj control
-vu16* REG_WINOUT() { return cast(vu16*) (REG_BASE + 0x004A); }
+enum REG_WIN0H = cast(vu16*)(REG_BASE + 0x0040); //!< win0 right, left (0xLLRR)
+
+enum REG_WIN1H = cast(vu16*)(REG_BASE + 0x0042); //!< win1 right, left (0xLLRR)
+
+enum REG_WIN0V = cast(vu16*)(REG_BASE + 0x0044); //!< win0 bottom, top (0xTTBB)
+
+enum REG_WIN1V = cast(vu16*)(REG_BASE + 0x0046); //!< win1 bottom, top (0xTTBB)
+
+enum REG_WININ = cast(vu16*)(REG_BASE + 0x0048); //!< win0, win1 control
+
+enum REG_WINOUT = cast(vu16*)(REG_BASE + 0x004A); //!< winOut, winObj control
+
 //\}
 
 //! \name Alternate Windowing registers
 //\{
-// enum REG_WIN0R = *cast(vu8*) REG_BASE + 0x0040; //!< Win 0 right
-vu8* REG_WIN0R() { return cast(vu8*) (REG_BASE + 0x0040); }
-// enum REG_WIN0L = *cast(vu8*) REG_BASE + 0x0041; //!< Win 0 left
-vu8* REG_WIN0L() { return cast(vu8*) (REG_BASE + 0x0041); }
-// enum REG_WIN1R = *cast(vu8*) REG_BASE + 0x0042; //!< Win 1 right
-vu8* REG_WIN1R() { return cast(vu8*) (REG_BASE + 0x0042); }
-// enum REG_WIN1L = *cast(vu8*) REG_BASE + 0x0043; //!< Win 1 left
-vu8* REG_WIN1L() { return cast(vu8*) (REG_BASE + 0x0043); }
+enum REG_WIN0R = cast(vu8*)(REG_BASE + 0x0040); //!< Win 0 right
 
-// enum REG_WIN0B = *cast(vu8*) REG_BASE + 0x0044; //!< Win 0 bottom
-vu8* REG_WIN0B() { return cast(vu8*) (REG_BASE + 0x0044); }
-// enum REG_WIN0T = *cast(vu8*) REG_BASE + 0x0045; //!< Win 0 top
-vu8* REG_WIN0T() { return cast(vu8*) (REG_BASE + 0x0045); }
-// enum REG_WIN1B = *cast(vu8*) REG_BASE + 0x0046; //!< Win 1 bottom
-vu8* REG_WIN1B() { return cast(vu8*) (REG_BASE + 0x0046); }
-// enum REG_WIN1T = *cast(vu8*) REG_BASE + 0x0047; //!< Win 1 top
-vu8* REG_WIN1T() { return cast(vu8*) (REG_BASE + 0x0047); }
+enum REG_WIN0L = cast(vu8*)(REG_BASE + 0x0041); //!< Win 0 left
 
-// enum REG_WIN0CNT = *cast(vu8*) REG_BASE + 0x0048; //!< window 0 control
-vu8* REG_WIN0CNT() { return cast(vu8*) (REG_BASE + 0x0048); }
-// enum REG_WIN1CNT = *cast(vu8*) REG_BASE + 0x0049; //!< window 1 control
-vu8* REG_WIN1CNT() { return cast(vu8*) (REG_BASE + 0x0049); }
-// enum REG_WINOUTCNT = *cast(vu8*) REG_BASE + 0x004A; //!< Out window control
-vu8* REG_WINOUTCNT() { return cast(vu8*) (REG_BASE + 0x004A); }
-// enum REG_WINOBJCNT = *cast(vu8*) REG_BASE + 0x004B; //!< Obj window control
-vu8* REG_WINOBJCNT() { return cast(vu8*) (REG_BASE + 0x004B); }
+enum REG_WIN1R = cast(vu8*)(REG_BASE + 0x0042); //!< Win 1 right
+
+enum REG_WIN1L = cast(vu8*)(REG_BASE + 0x0043); //!< Win 1 left
+
+enum REG_WIN0B = cast(vu8*)(REG_BASE + 0x0044); //!< Win 0 bottom
+
+enum REG_WIN0T = cast(vu8*)(REG_BASE + 0x0045); //!< Win 0 top
+
+enum REG_WIN1B = cast(vu8*)(REG_BASE + 0x0046); //!< Win 1 bottom
+
+enum REG_WIN1T = cast(vu8*)(REG_BASE + 0x0047); //!< Win 1 top
+
+enum REG_WIN0CNT = cast(vu8*)(REG_BASE + 0x0048); //!< window 0 control
+
+enum REG_WIN1CNT = cast(vu8*)(REG_BASE + 0x0049); //!< window 1 control
+
+enum REG_WINOUTCNT = cast(vu8*)(REG_BASE + 0x004A); //!< Out window control
+
+enum REG_WINOBJCNT = cast(vu8*)(REG_BASE + 0x004B); //!< Obj window control
+
 //\}
 
 //! \name Graphic effects
 //\{
-// enum REG_MOSAIC = *cast(vu32*) REG_BASE + 0x004C; //!< Mosaic control
-vu32* REG_MOSAIC() { return cast(vu32*) (REG_BASE + 0x004C); }
-// enum REG_BLDCNT = *cast(vu16*) REG_BASE + 0x0050; //!< Alpha control
-vu16* REG_BLDCNT() { return cast(vu16*) (REG_BASE + 0x0050); }
-// enum REG_BLDALPHA = *cast(vu16*) REG_BASE + 0x0052; //!< Fade level
-vu16* REG_BLDALPHA() { return cast(vu16*) (REG_BASE + 0x0052); }
-// enum REG_BLDY = *cast(vu16*) REG_BASE + 0x0054; //!< Blend levels
-vu16* REG_BLDY() { return cast(vu16*) (REG_BASE + 0x0054); }
+enum REG_MOSAIC = cast(vu32*)(REG_BASE + 0x004C); //!< Mosaic control
+
+enum REG_BLDCNT = cast(vu16*)(REG_BASE + 0x0050); //!< Alpha control
+
+enum REG_BLDALPHA = cast(vu16*)(REG_BASE + 0x0052); //!< Fade level
+
+enum REG_BLDY = cast(vu16*)(REG_BASE + 0x0054); //!< Blend levels
+
 //\}
 
 // === SOUND REGISTERS ===
@@ -404,194 +406,187 @@ vu16* REG_BLDY() { return cast(vu16*) (REG_BASE + 0x0054); }
 
 //! \name Channel 1: Square wave with sweep
 //\{
-// enum REG_SND1SWEEP = *cast(vu16*) REG_BASE + 0x0060; //!< Channel 1 Sweep
-vu16* REG_SND1SWEEP() { return cast(vu16*) (REG_BASE + 0x0060); }
-// enum REG_SND1CNT = *cast(vu16*) REG_BASE + 0x0062; //!< Channel 1 Control
-vu16* REG_SND1CNT() { return cast(vu16*) (REG_BASE + 0x0062); }
-// enum REG_SND1FREQ = *cast(vu16*) REG_BASE + 0x0064; //!< Channel 1 frequency
-vu16* REG_SND1FREQ() { return cast(vu16*) (REG_BASE + 0x0064); }
+enum REG_SND1SWEEP = cast(vu16*)(REG_BASE + 0x0060); //!< Channel 1 Sweep
+
+enum REG_SND1CNT = cast(vu16*)(REG_BASE + 0x0062); //!< Channel 1 Control
+
+enum REG_SND1FREQ = cast(vu16*)(REG_BASE + 0x0064); //!< Channel 1 frequency
+
 //\}
 
 //! \name Channel 2: Simple square wave
 //\{
-// enum REG_SND2CNT = *cast(vu16*) REG_BASE + 0x0068; //!< Channel 2 control
-vu16* REG_SND2CNT() { return cast(vu16*) (REG_BASE + 0x0068); }
-// enum REG_SND2FREQ = *cast(vu16*) REG_BASE + 0x006C; //!< Channel 2 frequency
-vu16* REG_SND2FREQ() { return cast(vu16*) (REG_BASE + 0x006C); }
+enum REG_SND2CNT = cast(vu16*)(REG_BASE + 0x0068); //!< Channel 2 control
+
+enum REG_SND2FREQ = cast(vu16*)(REG_BASE + 0x006C); //!< Channel 2 frequency
+
 //\}
 
 //! \name Channel 3: Wave player
 //\{
-// enum REG_SND3SEL = *cast(vu16*) REG_BASE + 0x0070; //!< Channel 3 wave select
-vu16* REG_SND3SEL() { return cast(vu16*) (REG_BASE + 0x0070); }
-// enum REG_SND3CNT = *cast(vu16*) REG_BASE + 0x0072; //!< Channel 3 control
-vu16* REG_SND3CNT() { return cast(vu16*) (REG_BASE + 0x0072); }
-// enum REG_SND3FREQ = *cast(vu16*) REG_BASE + 0x0074; //!< Channel 3 frequency
-vu16* REG_SND3FREQ() { return cast(vu16*) (REG_BASE + 0x0074); }
+enum REG_SND3SEL = cast(vu16*)(REG_BASE + 0x0070); //!< Channel 3 wave select
+
+enum REG_SND3CNT = cast(vu16*)(REG_BASE + 0x0072); //!< Channel 3 control
+
+enum REG_SND3FREQ = cast(vu16*)(REG_BASE + 0x0074); //!< Channel 3 frequency
+
 //\}
 
 //! \name Channel 4: Noise generator
 //\{
-// enum REG_SND4CNT = *cast(vu16*) REG_BASE + 0x0078; //!< Channel 4 control
-vu16* REG_SND4CNT() { return cast(vu16*) (REG_BASE + 0x0078); }
-// enum REG_SND4FREQ = *cast(vu16*) REG_BASE + 0x007C; //!< Channel 4 frequency
-vu16* REG_SND4FREQ() { return cast(vu16*) (REG_BASE + 0x007C); }
+enum REG_SND4CNT = cast(vu16*)(REG_BASE + 0x0078); //!< Channel 4 control
+
+enum REG_SND4FREQ = cast(vu16*)(REG_BASE + 0x007C); //!< Channel 4 frequency
+
 //\}
 
 //! \name Sound control
 //\{
-// enum REG_SNDCNT = *cast(vu32*) REG_BASE + 0x0080; //!< Main sound control
-vu32* REG_SNDCNT() { return cast(vu32*) (REG_BASE + 0x0080); }
-// enum REG_SNDDMGCNT = *cast(vu16*) REG_BASE + 0x0080; //!< DMG channel control
-vu16* REG_SNDDMGCNT() { return cast(vu16*) (REG_BASE + 0x0080); }
-// enum REG_SNDDSCNT = *cast(vu16*) REG_BASE + 0x0082; //!< Direct Sound control
-vu16* REG_SNDDSCNT() { return cast(vu16*) (REG_BASE + 0x0082); }
-// enum REG_SNDSTAT = *cast(vu16*) REG_BASE + 0x0084; //!< Sound status
-vu16* REG_SNDSTAT() { return cast(vu16*) (REG_BASE + 0x0084); }
-// enum REG_SNDBIAS = *cast(vu16*) REG_BASE + 0x0088; //!< Sound bias
-vu16* REG_SNDBIAS() { return cast(vu16*) (REG_BASE + 0x0088); }
+enum REG_SNDCNT = cast(vu32*)(REG_BASE + 0x0080); //!< Main sound control
+
+enum REG_SNDDMGCNT = cast(vu16*)(REG_BASE + 0x0080); //!< DMG channel control
+
+enum REG_SNDDSCNT = cast(vu16*)(REG_BASE + 0x0082); //!< Direct Sound control
+
+enum REG_SNDSTAT = cast(vu16*)(REG_BASE + 0x0084); //!< Sound status
+
+enum REG_SNDBIAS = cast(vu16*)(REG_BASE + 0x0088); //!< Sound bias
+
 //\}
 
 //! \name Sound buffers
 //\{
-// enum REG_WAVE_RAM = cast(vu32*) REG_BASE + 0x0090; //!< Channel 3 wave buffer
-vu32* REG_WAVE_RAM() { return cast(vu32*) (REG_BASE + 0x0090); }
+enum REG_WAVE_RAM = cast(vu32*)(REG_BASE + 0x0090); //!< Channel 3 wave buffer
 
-// enum REG_WAVE_RAM0 = *cast(vu32*) REG_BASE + 0x0090;
-vu32* REG_WAVE_RAM0() { return cast(vu32*) (REG_BASE + 0x0090); }
-// enum REG_WAVE_RAM1 = *cast(vu32*) REG_BASE + 0x0094;
-vu32* REG_WAVE_RAM1() { return cast(vu32*) (REG_BASE + 0x0094); }
-// enum REG_WAVE_RAM2 = *cast(vu32*) REG_BASE + 0x0098;
-vu32* REG_WAVE_RAM2() { return cast(vu32*) (REG_BASE + 0x0098); }
-// enum REG_WAVE_RAM3 = *cast(vu32*) REG_BASE + 0x009C;
-vu32* REG_WAVE_RAM3() { return cast(vu32*) (REG_BASE + 0x009C); }
+enum REG_WAVE_RAM0 = cast(vu32*)(REG_BASE + 0x0090);
 
-// enum REG_FIFO_A = *cast(vu32*) REG_BASE + 0x00A0; //!< DSound A FIFO
-vu32* REG_FIFO_A() { return cast(vu32*) (REG_BASE + 0x00A0); }
-// enum REG_FIFO_B = *cast(vu32*) REG_BASE + 0x00A4; //!< DSound B FIFO
-vu32* REG_FIFO_B() { return cast(vu32*) (REG_BASE + 0x00A4); }
+enum REG_WAVE_RAM1 = cast(vu32*)(REG_BASE + 0x0094);
+
+enum REG_WAVE_RAM2 = cast(vu32*)(REG_BASE + 0x0098);
+
+enum REG_WAVE_RAM3 = cast(vu32*)(REG_BASE + 0x009C);
+
+enum REG_FIFO_A = cast(vu32*)(REG_BASE + 0x00A0); //!< DSound A FIFO
+
+enum REG_FIFO_B = cast(vu32*)(REG_BASE + 0x00A4); //!< DSound B FIFO
+
 //\}
 
 //! \name DMA registers
 //\{
-// enum REG_DMA = cast(DMA_REC*) REG_BASE + 0x00B0; //!< DMA as DMA_REC array
-DMA_REC** REG_DMA() { return cast(DMA_REC**) REG_BASE + 0x00B0; }
+enum REG_DMA = cast(DMA_REC*)(REG_BASE + 0x00B0); //!< DMA as DMA_REC array
 
-// enum REG_DMA0SAD = *cast(vu32*) REG_BASE + 0x00B0; //!< DMA 0 Source address
-vu32* REG_DMA0SAD() { return cast(vu32*) (REG_BASE + 0x00B0); }
-// enum REG_DMA0DAD = *cast(vu32*) REG_BASE + 0x00B4; //!< DMA 0 Destination address
-vu32* REG_DMA0DAD() { return cast(vu32*) (REG_BASE + 0x00B4); }
-// enum REG_DMA0CNT = *cast(vu32*) REG_BASE + 0x00B8; //!< DMA 0 Control
-vu32* REG_DMA0CNT() { return cast(vu32*) (REG_BASE + 0x00B8); }
+enum REG_DMA0SAD = cast(vu32*)(REG_BASE + 0x00B0); //!< DMA 0 Source address
 
-// enum REG_DMA1SAD = *cast(vu32*) REG_BASE + 0x00BC; //!< DMA 1 Source address
-vu32* REG_DMA1SAD() { return cast(vu32*) (REG_BASE + 0x00BC); }
-// enum REG_DMA1DAD = *cast(vu32*) REG_BASE + 0x00C0; //!< DMA 1 Destination address
-vu32* REG_DMA1DAD() { return cast(vu32*) (REG_BASE + 0x00C0); }
-// enum REG_DMA1CNT = *cast(vu32*) REG_BASE + 0x00C4; //!< DMA 1 Control
-vu32* REG_DMA1CNT() { return cast(vu32*) (REG_BASE + 0x00C4); }
+enum REG_DMA0DAD = cast(vu32*)(REG_BASE + 0x00B4); //!< DMA 0 Destination address
 
-// enum REG_DMA2SAD = *cast(vu32*) REG_BASE + 0x00C8; //!< DMA 2 Source address
-vu32* REG_DMA2SAD() { return cast(vu32*) (REG_BASE + 0x00C8); }
-// enum REG_DMA2DAD = *cast(vu32*) REG_BASE + 0x00CC; //!< DMA 2 Destination address
-vu32* REG_DMA2DAD() { return cast(vu32*) (REG_BASE + 0x00CC); }
-// enum REG_DMA2CNT = *cast(vu32*) REG_BASE + 0x00D0; //!< DMA 2 Control
-vu32* REG_DMA2CNT() { return cast(vu32*) (REG_BASE + 0x00D0); }
+enum REG_DMA0CNT = cast(vu32*)(REG_BASE + 0x00B8); //!< DMA 0 Control
 
-// enum REG_DMA3SAD = *cast(vu32*) REG_BASE + 0x00D4; //!< DMA 3 Source address
-vu32* REG_DMA3SAD() { return cast(vu32*) (REG_BASE + 0x00D4); }
-// enum REG_DMA3DAD = *cast(vu32*) REG_BASE + 0x00D8; //!< DMA 3 Destination address
-vu32* REG_DMA3DAD() { return cast(vu32*) (REG_BASE + 0x00D8); }
-// enum REG_DMA3CNT = *cast(vu32*) REG_BASE + 0x00DC; //!< DMA 3 Control
-vu32* REG_DMA3CNT() { return cast(vu32*) (REG_BASE + 0x00DC); }
+enum REG_DMA1SAD = cast(vu32*)(REG_BASE + 0x00BC); //!< DMA 1 Source address
+
+enum REG_DMA1DAD = cast(vu32*)(REG_BASE + 0x00C0); //!< DMA 1 Destination address
+
+enum REG_DMA1CNT = cast(vu32*)(REG_BASE + 0x00C4); //!< DMA 1 Control
+
+enum REG_DMA2SAD = cast(vu32*)(REG_BASE + 0x00C8); //!< DMA 2 Source address
+
+enum REG_DMA2DAD = cast(vu32*)(REG_BASE + 0x00CC); //!< DMA 2 Destination address
+
+enum REG_DMA2CNT = cast(vu32*)(REG_BASE + 0x00D0); //!< DMA 2 Control
+
+enum REG_DMA3SAD = cast(vu32*)(REG_BASE + 0x00D4); //!< DMA 3 Source address
+
+enum REG_DMA3DAD = cast(vu32*)(REG_BASE + 0x00D8); //!< DMA 3 Destination address
+
+enum REG_DMA3CNT = cast(vu32*)(REG_BASE + 0x00DC); //!< DMA 3 Control
+
 //\}
 
 //! \name Timer registers
 //\{
 // enum REG_TM = cast(TMR_REC*) REG_BASE + 0x0100; //!< Timers as TMR_REC array
-TMR_REC* REG_TM() { return cast(TMR_REC*) REG_BASE + 0x0100; }
+TMR_REC* REG_TM() {
+	return cast(TMR_REC*) REG_BASE + 0x0100;
+}
 
-// enum REG_TM0D = *cast(vu16*) REG_BASE + 0x0100; //!< Timer 0 data
-vu16* REG_TM0D() { return cast(vu16*) (REG_BASE + 0x0100); }
-// enum REG_TM0CNT = *cast(vu16*) REG_BASE + 0x0102; //!< Timer 0 control
-vu16* REG_TM0CNT() { return cast(vu16*) (REG_BASE + 0x0102); }
-// enum REG_TM1D = *cast(vu16*) REG_BASE + 0x0104; //!< Timer 1 data
-vu16* REG_TM1D() { return cast(vu16*) (REG_BASE + 0x0104); }
-// enum REG_TM1CNT = *cast(vu16*) REG_BASE + 0x0106; //!< Timer 1 control
-vu16* REG_TM1CNT() { return cast(vu16*) (REG_BASE + 0x0106); }
-// enum REG_TM2D = *cast(vu16*) REG_BASE + 0x0108; //!< Timer 2 data
-vu16* REG_TM2D() { return cast(vu16*) (REG_BASE + 0x0108); }
-// enum REG_TM2CNT = *cast(vu16*) REG_BASE + 0x010A; //!< Timer 2 control
-vu16* REG_TM2CNT() { return cast(vu16*) (REG_BASE + 0x010A); }
-// enum REG_TM3D = *cast(vu16*) REG_BASE + 0x010C; //!< Timer 3 data
-vu16* REG_TM3D() { return cast(vu16*) (REG_BASE + 0x010C); }
-// enum REG_TM3CNT = *cast(vu16*) REG_BASE + 0x010E; //!< Timer 3 control
-vu16* REG_TM3CNT() { return cast(vu16*) (REG_BASE + 0x010E); }
+enum REG_TM0D = cast(vu16*)(REG_BASE + 0x0100); //!< Timer 0 data
+
+enum REG_TM0CNT = cast(vu16*)(REG_BASE + 0x0102); //!< Timer 0 control
+
+enum REG_TM1D = cast(vu16*)(REG_BASE + 0x0104); //!< Timer 1 data
+
+enum REG_TM1CNT = cast(vu16*)(REG_BASE + 0x0106); //!< Timer 1 control
+
+enum REG_TM2D = cast(vu16*)(REG_BASE + 0x0108); //!< Timer 2 data
+
+enum REG_TM2CNT = cast(vu16*)(REG_BASE + 0x010A); //!< Timer 2 control
+
+enum REG_TM3D = cast(vu16*)(REG_BASE + 0x010C); //!< Timer 3 data
+
+enum REG_TM3CNT = cast(vu16*)(REG_BASE + 0x010E); //!< Timer 3 control
+
 //\}
 
 //! \name Serial communication
 //{
-// enum REG_SIOCNT = *cast(vu16*) REG_BASE + 0x0128; //!< Serial IO control (Normal/MP/UART)
-vu16* REG_SIOCNT() { return cast(vu16*) (REG_BASE + 0x0128); }
+enum REG_SIOCNT = cast(vu16*)(REG_BASE + 0x0128); //!< Serial IO control (Normal/MP/UART)
 
-// enum REG_SIODATA = cast(vu32*) REG_BASE + 0x0120;
-vu32* REG_SIODATA() { return cast(vu32*) (REG_BASE + 0x0120); }
-// enum REG_SIODATA32 = *cast(vu32*) REG_BASE + 0x0120; //!< Normal/UART 32bit data
-vu32* REG_SIODATA32() { return cast(vu32*) (REG_BASE + 0x0120); }
-// enum REG_SIODATA8 = *cast(vu16*) REG_BASE + 0x012A; //!< Normal/UART 8bit data
-vu16* REG_SIODATA8() { return cast(vu16*) (REG_BASE + 0x012A); }
+enum REG_SIODATA = cast(vu32*)(REG_BASE + 0x0120);
 
-// enum REG_SIOMULTI = cast(vu16*) REG_BASE + 0x0120; //!< Multiplayer data array
-vu16* REG_SIOMULTI() { return cast(vu16*) (REG_BASE + 0x0120); }
-// enum REG_SIOMULTI0 = *cast(vu16*) REG_BASE + 0x0120; //!< MP master data
-vu16* REG_SIOMULTI0() { return cast(vu16*) (REG_BASE + 0x0120); }
-// enum REG_SIOMULTI1 = *cast(vu16*) REG_BASE + 0x0122; //!< MP Slave 1 data
-vu16* REG_SIOMULTI1() { return cast(vu16*) (REG_BASE + 0x0122); }
-// enum REG_SIOMULTI2 = *cast(vu16*) REG_BASE + 0x0124; //!< MP Slave 2 data 
-vu16* REG_SIOMULTI2() { return cast(vu16*) (REG_BASE + 0x0124); }
-// enum REG_SIOMULTI3 = *cast(vu16*) REG_BASE + 0x0126; //!< MP Slave 3 data
-vu16* REG_SIOMULTI3() { return cast(vu16*) (REG_BASE + 0x0126); }
+enum REG_SIODATA32 = cast(vu32*)(REG_BASE + 0x0120); //!< Normal/UART 32bit data
 
-// enum REG_SIOMLT_RECV = *cast(vu16*) REG_BASE + 0x0120; //!< MP data receiver
-vu16* REG_SIOMLT_RECV() { return cast(vu16*) (REG_BASE + 0x0120); }
-// enum REG_SIOMLT_SEND = *cast(vu16*) REG_BASE + 0x012A; //!< MP data sender
-vu16* REG_SIOMLT_SEND() { return cast(vu16*) (REG_BASE + 0x012A); }
+enum REG_SIODATA8 = cast(vu16*)(REG_BASE + 0x012A); //!< Normal/UART 8bit data
+
+enum REG_SIOMULTI = cast(vu16*)(REG_BASE + 0x0120); //!< Multiplayer data array
+
+enum REG_SIOMULTI0 = cast(vu16*)(REG_BASE + 0x0120); //!< MP master data
+
+enum REG_SIOMULTI1 = cast(vu16*)(REG_BASE + 0x0122); //!< MP Slave 1 data
+
+enum REG_SIOMULTI2 = cast(vu16*)(REG_BASE + 0x0124); //!< MP Slave 2 data 
+
+enum REG_SIOMULTI3 = cast(vu16*)(REG_BASE + 0x0126); //!< MP Slave 3 data
+
+enum REG_SIOMLT_RECV = cast(vu16*)(REG_BASE + 0x0120); //!< MP data receiver
+
+enum REG_SIOMLT_SEND = cast(vu16*)(REG_BASE + 0x012A); //!< MP data sender
+
 //\}
 
 //! \name Keypad registers
 //\{
-// enum REG_KEYINPUT = *cast(vu16*) REG_BASE + 0x0130; //!< Key status (read only??)
-vu16* REG_KEYINPUT() { return cast(vu16*) (REG_BASE + 0x0130); }
-// enum REG_KEYCNT = *cast(vu16*) REG_BASE + 0x0132; //!< Key IRQ control
-vu16* REG_KEYCNT() { return cast(vu16*) (REG_BASE + 0x0132); }
+enum REG_KEYINPUT = cast(vu16*)(REG_BASE + 0x0130); //!< Key status (read only??)
+
+enum REG_KEYCNT = cast(vu16*)(REG_BASE + 0x0132); //!< Key IRQ control
+
 //\}
 
 //! \name Joybus communication
 //\{
-// enum REG_RCNT = *cast(vu16*) REG_BASE + 0x0134; //!< SIO Mode Select/General Purpose Data
-vu16* REG_RCNT() { return cast(vu16*) (REG_BASE + 0x0134); }
-// enum REG_JOYCNT = *cast(vu16*) REG_BASE + 0x0140; //!< JOY bus control
-vu16* REG_JOYCNT() { return cast(vu16*) (REG_BASE + 0x0140); }
-// enum REG_JOY_RECV = *cast(vu32*) REG_BASE + 0x0150; //!< JOY bus receiever
-vu32* REG_JOY_RECV() { return cast(vu32*) (REG_BASE + 0x0150); }
-// enum REG_JOY_TRS = *cast(vu32*) REG_BASE + 0x0154; //!< JOY bus transmitter
-vu32* REG_JOY_TRS() { return cast(vu32*) (REG_BASE + 0x0154); }
-// enum REG_JOYSTAT = *cast(vu16*) REG_BASE + 0x0158; //!< JOY bus status
-vu16* REG_JOYSTAT() { return cast(vu16*) (REG_BASE + 0x0158); }
+enum REG_RCNT = cast(vu16*)(REG_BASE + 0x0134); //!< SIO Mode Select/General Purpose Data
+
+enum REG_JOYCNT = cast(vu16*)(REG_BASE + 0x0140); //!< JOY bus control
+
+enum REG_JOY_RECV = cast(vu32*)(REG_BASE + 0x0150); //!< JOY bus receiever
+
+enum REG_JOY_TRS = cast(vu32*)(REG_BASE + 0x0154); //!< JOY bus transmitter
+
+enum REG_JOYSTAT = cast(vu16*)(REG_BASE + 0x0158); //!< JOY bus status
+
 //\}
 
 //! \name Interrupt / System registers
 //\{
-// enum REG_IE = *cast(vu16*) REG_BASE + 0x0200; //!< IRQ enable
-vu16* REG_IE() { return cast(vu16*) (REG_BASE + 0x0200); }
-// enum REG_IF = *cast(vu16*) REG_BASE + 0x0202; //!< IRQ status/acknowledge
-vu16* REG_IF() { return cast(vu16*) (REG_BASE + 0x0202); }
-// enum REG_WAITCNT = *cast(vu16*) REG_BASE + 0x0204; //!< Waitstate control
-vu16* REG_WAITCNT() { return cast(vu16*) (REG_BASE + 0x0204); }
-// enum REG_IME = *cast(vu16*) REG_BASE + 0x0208; //!< IRQ master enable
-vu16* REG_IME() { return cast(vu16*) (REG_BASE + 0x0208); }
-// enum REG_PAUSE = *cast(vu16*) REG_BASE + 0x0300; //!< Pause system (?)
-vu16* REG_PAUSE() { return cast(vu16*) (REG_BASE + 0x0300); }
+enum REG_IE = cast(vu16*)(REG_BASE + 0x0200); //!< IRQ enable
+
+enum REG_IF = cast(vu16*)(REG_BASE + 0x0202); //!< IRQ status/acknowledge
+
+enum REG_WAITCNT = cast(vu16*)(REG_BASE + 0x0204); //!< Waitstate control
+
+enum REG_IME = cast(vu16*)(REG_BASE + 0x0208); //!< IRQ master enable
+
+enum REG_PAUSE = cast(vu16*)(REG_BASE + 0x0300); //!< Pause system (?)
+
 //\}
 
 /*!	\}	*/
@@ -606,136 +601,124 @@ vu16* REG_PAUSE() { return cast(vu16*) (REG_BASE + 0x0300); }
 */
 /*!	\{	*/
 
-// enum REG_BLDMOD = *cast(vu16*) REG_BASE + 0x0050; // alpha control
-vu16* REG_BLDMOD() { return cast(vu16*) (REG_BASE + 0x0050); }
-// enum REG_COLEV = *cast(vu16*) REG_BASE + 0x0052; // fade level
-vu16* REG_COLEV() { return cast(vu16*) (REG_BASE + 0x0052); }
-// enum REG_COLEY = *cast(vu16*) REG_BASE + 0x0054; // blend levels
-vu16* REG_COLEY() { return cast(vu16*) (REG_BASE + 0x0054); }
+enum REG_BLDMOD = cast(vu16*)(REG_BASE + 0x0050); // alpha control
+
+enum REG_COLEV = cast(vu16*)(REG_BASE + 0x0052); // fade level
+
+enum REG_COLEY = cast(vu16*)(REG_BASE + 0x0054); // blend levels
 
 // sound regs as in belogic and GBATek (mostly for compatability)
-// enum REG_SOUND1CNT = *cast(vu32*) REG_BASE + 0x0060;
-vu32* REG_SOUND1CNT() { return cast(vu32*) (REG_BASE + 0x0060); }
-// enum REG_SOUND1CNT_L = *cast(vu16*) REG_BASE + 0x0060;
-vu16* REG_SOUND1CNT_L() { return cast(vu16*) (REG_BASE + 0x0060); }
-// enum REG_SOUND1CNT_H = *cast(vu16*) REG_BASE + 0x0062;
-vu16* REG_SOUND1CNT_H() { return cast(vu16*) (REG_BASE + 0x0062); }
-// enum REG_SOUND1CNT_X = *cast(vu16*) REG_BASE + 0x0064;
-vu16* REG_SOUND1CNT_X() { return cast(vu16*) (REG_BASE + 0x0064); }
-// enum REG_SOUND2CNT_L = *cast(vu16*) REG_BASE + 0x0068;
-vu16* REG_SOUND2CNT_L() { return cast(vu16*) (REG_BASE + 0x0068); }
-// enum REG_SOUND2CNT_H = *cast(vu16*) REG_BASE + 0x006C;
-vu16* REG_SOUND2CNT_H() { return cast(vu16*) (REG_BASE + 0x006C); }
-// enum REG_SOUND3CNT = *cast(vu32*) REG_BASE + 0x0070;
-vu32* REG_SOUND3CNT() { return cast(vu32*) (REG_BASE + 0x0070); }
-// enum REG_SOUND3CNT_L = *cast(vu16*) REG_BASE + 0x0070;
-vu16* REG_SOUND3CNT_L() { return cast(vu16*) (REG_BASE + 0x0070); }
-// enum REG_SOUND3CNT_H = *cast(vu16*) REG_BASE + 0x0072;
-vu16* REG_SOUND3CNT_H() { return cast(vu16*) (REG_BASE + 0x0072); }
-// enum REG_SOUND3CNT_X = *cast(vu16*) REG_BASE + 0x0074;
-vu16* REG_SOUND3CNT_X() { return cast(vu16*) (REG_BASE + 0x0074); }
-// enum REG_SOUND4CNT_L = *cast(vu16*) REG_BASE + 0x0078;
-vu16* REG_SOUND4CNT_L() { return cast(vu16*) (REG_BASE + 0x0078); }
-// enum REG_SOUND4CNT_H = *cast(vu16*) REG_BASE + 0x007C;
-vu16* REG_SOUND4CNT_H() { return cast(vu16*) (REG_BASE + 0x007C); }
-// enum REG_SOUNDCNT = *cast(vu32*) REG_BASE + 0x0080;
-vu32* REG_SOUNDCNT() { return cast(vu32*) (REG_BASE + 0x0080); }
-// enum REG_SOUNDCNT_L = *cast(vu16*) REG_BASE + 0x0080;
-vu16* REG_SOUNDCNT_L() { return cast(vu16*) (REG_BASE + 0x0080); }
-// enum REG_SOUNDCNT_H = *cast(vu16*) REG_BASE + 0x0082;
-vu16* REG_SOUNDCNT_H() { return cast(vu16*) (REG_BASE + 0x0082); }
-// enum REG_SOUNDCNT_X = *cast(vu16*) REG_BASE + 0x0084;
-vu16* REG_SOUNDCNT_X() { return cast(vu16*) (REG_BASE + 0x0084); }
-// enum REG_SOUNDBIAS = *cast(vu16*) REG_BASE + 0x0088;
-vu16* REG_SOUNDBIAS() { return cast(vu16*) (REG_BASE + 0x0088); }
+enum REG_SOUND1CNT = cast(vu32*)(REG_BASE + 0x0060);
 
-// enum REG_WAVE = cast(vu32*) REG_BASE + 0x0090;
-vu32* REG_WAVE() { return cast(vu32*) (REG_BASE + 0x0090); }
-// enum REG_FIFOA = *cast(vu32*) REG_BASE + 0x00A0;
-vu32* REG_FIFOA() { return cast(vu32*) (REG_BASE + 0x00A0); }
-// enum REG_FIFOB = *cast(vu32*) REG_BASE + 0x00A4;
-vu32* REG_FIFOB() { return cast(vu32*) (REG_BASE + 0x00A4); }
+enum REG_SOUND1CNT_L = cast(vu16*)(REG_BASE + 0x0060);
 
-// enum REG_DMA0CNT_L = *cast(vu16*) REG_BASE + 0x00B8; // count
-vu16* REG_DMA0CNT_L() { return cast(vu16*) (REG_BASE + 0x00B8); }
-// enum REG_DMA0CNT_H = *cast(vu16*) REG_BASE + 0x00BA; // flags
-vu16* REG_DMA0CNT_H() { return cast(vu16*) (REG_BASE + 0x00BA); }
-// enum REG_DMA1CNT_L = *cast(vu16*) REG_BASE + 0x00C4;
-vu16* REG_DMA1CNT_L() { return cast(vu16*) (REG_BASE + 0x00C4); }
-// enum REG_DMA1CNT_H = *cast(vu16*) REG_BASE + 0x00C6;
-vu16* REG_DMA1CNT_H() { return cast(vu16*) (REG_BASE + 0x00C6); }
-// enum REG_DMA2CNT_L = *cast(vu16*) REG_BASE + 0x00D0;
-vu16* REG_DMA2CNT_L() { return cast(vu16*) (REG_BASE + 0x00D0); }
-// enum REG_DMA2CNT_H = *cast(vu16*) REG_BASE + 0x00D2;
-vu16* REG_DMA2CNT_H() { return cast(vu16*) (REG_BASE + 0x00D2); }
-// enum REG_DMA3CNT_L = *cast(vu16*) REG_BASE + 0x00DC;
-vu16* REG_DMA3CNT_L() { return cast(vu16*) (REG_BASE + 0x00DC); }
-// enum REG_DMA3CNT_H = *cast(vu16*) REG_BASE + 0x00DE;
-vu16* REG_DMA3CNT_H() { return cast(vu16*) (REG_BASE + 0x00DE); }
+enum REG_SOUND1CNT_H = cast(vu16*)(REG_BASE + 0x0062);
 
-// enum REG_TM0CNT_L = *cast(vu16*) REG_BASE + 0x0100;
-vu16* REG_TM0CNT_L() { return cast(vu16*) (REG_BASE + 0x0100); }
-// enum REG_TM0CNT_H = *cast(vu16*) REG_BASE + 0x0102;
-vu16* REG_TM0CNT_H() { return cast(vu16*) (REG_BASE + 0x0102); }
+enum REG_SOUND1CNT_X = cast(vu16*)(REG_BASE + 0x0064);
 
-// enum REG_TM1CNT_L = *cast(vu16*) REG_BASE + 0x0104;
-vu16* REG_TM1CNT_L() { return cast(vu16*) (REG_BASE + 0x0104); }
-// enum REG_TM1CNT_H = *cast(vu16*) REG_BASE + 0x0106;
-vu16* REG_TM1CNT_H() { return cast(vu16*) (REG_BASE + 0x0106); }
+enum REG_SOUND2CNT_L = cast(vu16*)(REG_BASE + 0x0068);
 
-// enum REG_TM2CNT_L = *cast(vu16*) REG_BASE + 0x0108;
-vu16* REG_TM2CNT_L() { return cast(vu16*) (REG_BASE + 0x0108); }
-// enum REG_TM2CNT_H = *cast(vu16*) REG_BASE + 0x010a;
-vu16* REG_TM2CNT_H() { return cast(vu16*) (REG_BASE + 0x010a); }
+enum REG_SOUND2CNT_H = cast(vu16*)(REG_BASE + 0x006C);
 
-// enum REG_TM3CNT_L = *cast(vu16*) REG_BASE + 0x010c;
-vu16* REG_TM3CNT_L() { return cast(vu16*) (REG_BASE + 0x010c); }
-// enum REG_TM3CNT_H = *cast(vu16*) REG_BASE + 0x010e;
-vu16* REG_TM3CNT_H() { return cast(vu16*) (REG_BASE + 0x010e); }
+enum REG_SOUND3CNT = cast(vu32*)(REG_BASE + 0x0070);
 
-// enum REG_KEYS = *cast(vu16*) REG_BASE + 0x0130; // Key status
-vu16* REG_KEYS() { return cast(vu16*) (REG_BASE + 0x0130); }
-// enum REG_P1 = *cast(vu16*) REG_BASE + 0x0130; // for backward combatibility
-vu16* REG_P1() { return cast(vu16*) (REG_BASE + 0x0130); }
-// enum REG_P1CNT = *cast(vu16*) REG_BASE + 0x0132; // ditto
-vu16* REG_P1CNT() { return cast(vu16*) (REG_BASE + 0x0132); }
+enum REG_SOUND3CNT_L = cast(vu16*)(REG_BASE + 0x0070);
 
-// enum REG_SCD0 = *cast(vu16*) REG_BASE + 0x0120;
-vu16* REG_SCD0() { return cast(vu16*) (REG_BASE + 0x0120); }
-// enum REG_SCD1 = *cast(vu16*) REG_BASE + 0x0122;
-vu16* REG_SCD1() { return cast(vu16*) (REG_BASE + 0x0122); }
-// enum REG_SCD2 = *cast(vu16*) REG_BASE + 0x0124;
-vu16* REG_SCD2() { return cast(vu16*) (REG_BASE + 0x0124); }
-// enum REG_SCD3 = *cast(vu16*) REG_BASE + 0x0126;
-vu16* REG_SCD3() { return cast(vu16*) (REG_BASE + 0x0126); }
-// enum REG_SCCNT = *cast(vu32*) REG_BASE + 0x0128;
-vu32* REG_SCCNT() { return cast(vu32*) (REG_BASE + 0x0128); }
-// enum REG_SCCNT_L = *cast(vu16*) REG_BASE + 0x0128;
-vu16* REG_SCCNT_L() { return cast(vu16*) (REG_BASE + 0x0128); }
-// enum REG_SCCNT_H = *cast(vu16*) REG_BASE + 0x012A;
-vu16* REG_SCCNT_H() { return cast(vu16*) (REG_BASE + 0x012A); }
+enum REG_SOUND3CNT_H = cast(vu16*)(REG_BASE + 0x0072);
 
-// enum REG_R = *cast(vu16*) REG_BASE + 0x0134;
-vu16* REG_R() { return cast(vu16*) (REG_BASE + 0x0134); }
-// enum REG_HS_CTRL = *cast(vu16*) REG_BASE + 0x0140;
-vu16* REG_HS_CTRL() { return cast(vu16*) (REG_BASE + 0x0140); }
-// enum REG_JOYRE = *cast(vu32*) REG_BASE + 0x0150;
-vu32* REG_JOYRE() { return cast(vu32*) (REG_BASE + 0x0150); }
-// enum REG_JOYRE_L = *cast(vu16*) REG_BASE + 0x0150;
-vu16* REG_JOYRE_L() { return cast(vu16*) (REG_BASE + 0x0150); }
-// enum REG_JOYRE_H = *cast(vu16*) REG_BASE + 0x0152;
-vu16* REG_JOYRE_H() { return cast(vu16*) (REG_BASE + 0x0152); }
-// enum REG_JOYTR = *cast(vu32*) REG_BASE + 0x0154;
-vu32* REG_JOYTR() { return cast(vu32*) (REG_BASE + 0x0154); }
-// enum REG_JOYTR_L = *cast(vu16*) REG_BASE + 0x0154;
-vu16* REG_JOYTR_L() { return cast(vu16*) (REG_BASE + 0x0154); }
-// enum REG_JOYTR_H = *cast(vu16*) REG_BASE + 0x0156;
-vu16* REG_JOYTR_H() { return cast(vu16*) (REG_BASE + 0x0156); }
-// enum REG_JSTAT = *cast(vu16*) REG_BASE + 0x0158;
-vu16* REG_JSTAT() { return cast(vu16*) (REG_BASE + 0x0158); }
+enum REG_SOUND3CNT_X = cast(vu16*)(REG_BASE + 0x0074);
 
-// enum REG_WSCNT = *cast(vu16*) REG_BASE + 0x0204;
-vu16* REG_WSCNT() { return cast(vu16*) (REG_BASE + 0x0204); }
+enum REG_SOUND4CNT_L = cast(vu16*)(REG_BASE + 0x0078);
+
+enum REG_SOUND4CNT_H = cast(vu16*)(REG_BASE + 0x007C);
+
+enum REG_SOUNDCNT = cast(vu32*)(REG_BASE + 0x0080);
+
+enum REG_SOUNDCNT_L = cast(vu16*)(REG_BASE + 0x0080);
+
+enum REG_SOUNDCNT_H = cast(vu16*)(REG_BASE + 0x0082);
+
+enum REG_SOUNDCNT_X = cast(vu16*)(REG_BASE + 0x0084);
+
+enum REG_SOUNDBIAS = cast(vu16*)(REG_BASE + 0x0088);
+
+enum REG_WAVE = cast(vu32*)(REG_BASE + 0x0090);
+
+enum REG_FIFOA = cast(vu32*)(REG_BASE + 0x00A0);
+
+enum REG_FIFOB = cast(vu32*)(REG_BASE + 0x00A4);
+
+enum REG_DMA0CNT_L = cast(vu16*)(REG_BASE + 0x00B8); // count
+
+enum REG_DMA0CNT_H = cast(vu16*)(REG_BASE + 0x00BA); // flags
+
+enum REG_DMA1CNT_L = cast(vu16*)(REG_BASE + 0x00C4);
+
+enum REG_DMA1CNT_H = cast(vu16*)(REG_BASE + 0x00C6);
+
+enum REG_DMA2CNT_L = cast(vu16*)(REG_BASE + 0x00D0);
+
+enum REG_DMA2CNT_H = cast(vu16*)(REG_BASE + 0x00D2);
+
+enum REG_DMA3CNT_L = cast(vu16*)(REG_BASE + 0x00DC);
+
+enum REG_DMA3CNT_H = cast(vu16*)(REG_BASE + 0x00DE);
+
+enum REG_TM0CNT_L = cast(vu16*)(REG_BASE + 0x0100);
+
+enum REG_TM0CNT_H = cast(vu16*)(REG_BASE + 0x0102);
+
+enum REG_TM1CNT_L = cast(vu16*)(REG_BASE + 0x0104);
+
+enum REG_TM1CNT_H = cast(vu16*)(REG_BASE + 0x0106);
+
+enum REG_TM2CNT_L = cast(vu16*)(REG_BASE + 0x0108);
+
+enum REG_TM2CNT_H = cast(vu16*)(REG_BASE + 0x010a);
+
+enum REG_TM3CNT_L = cast(vu16*)(REG_BASE + 0x010c);
+
+enum REG_TM3CNT_H = cast(vu16*)(REG_BASE + 0x010e);
+
+enum REG_KEYS = cast(vu16*)(REG_BASE + 0x0130); // Key status
+
+enum REG_P1 = cast(vu16*)(REG_BASE + 0x0130); // for backward combatibility
+
+enum REG_P1CNT = cast(vu16*)(REG_BASE + 0x0132); // ditto
+
+enum REG_SCD0 = cast(vu16*)(REG_BASE + 0x0120);
+
+enum REG_SCD1 = cast(vu16*)(REG_BASE + 0x0122);
+
+enum REG_SCD2 = cast(vu16*)(REG_BASE + 0x0124);
+
+enum REG_SCD3 = cast(vu16*)(REG_BASE + 0x0126);
+
+enum REG_SCCNT = cast(vu32*)(REG_BASE + 0x0128);
+
+enum REG_SCCNT_L = cast(vu16*)(REG_BASE + 0x0128);
+
+enum REG_SCCNT_H = cast(vu16*)(REG_BASE + 0x012A);
+
+enum REG_R = cast(vu16*)(REG_BASE + 0x0134);
+
+enum REG_HS_CTRL = cast(vu16*)(REG_BASE + 0x0140);
+
+enum REG_JOYRE = cast(vu32*)(REG_BASE + 0x0150);
+
+enum REG_JOYRE_L = cast(vu16*)(REG_BASE + 0x0150);
+
+enum REG_JOYRE_H = cast(vu16*)(REG_BASE + 0x0152);
+
+enum REG_JOYTR = cast(vu32*)(REG_BASE + 0x0154);
+
+enum REG_JOYTR_L = cast(vu16*)(REG_BASE + 0x0154);
+
+enum REG_JOYTR_H = cast(vu16*)(REG_BASE + 0x0156);
+
+enum REG_JSTAT = cast(vu16*)(REG_BASE + 0x0158);
+
+enum REG_WSCNT = cast(vu16*)(REG_BASE + 0x0204);
 
 // /*!	\}	*/
 
