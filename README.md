@@ -1,7 +1,7 @@
 
 # gba_dlang
 
-dlang libraries and runtime for the gameboy advance
+dlang libraries and runtime for the [Game Boy Advance](https://en.wikipedia.org/wiki/Game_Boy_Advance) handheld game console.
 
 ## about
 yes, you read that right! this is a dlang library and runtime for the gameboy advance.
