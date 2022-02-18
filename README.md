@@ -15,7 +15,17 @@ this would not have been possible without:
 - minimal druntime
 - minimal core.stdc, std, rt, object.d
 - libtonc bindings
+- maxmod bindings
+- gbfs bindings
 - utilities for mmio and volatile bare metal io
+
+## requirements
+
+i focused on making this as easy as possible to set up!
+all you need is a recent build of the LLVM D compiler (LDC), and a standard devkitarm installation.
+
+for maximum compatibility, i also provide a batteries included docker image that includes devkitarm and D and is fully able to build GBA roms.
+the docker container can be found here: https://github.com/redthing1/dkarm_gba_docker
 
 ## demo
 see the [demo project](demo/) for a fully functional example of building a gba rom with dlang.
