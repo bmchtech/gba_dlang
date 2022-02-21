@@ -3,15 +3,8 @@
 
 a toolkit (libraries + runtime) for using the D programming language to develop for the [Game Boy Advance](https://en.wikipedia.org/wiki/Game_Boy_Advance) handheld game console.
 
-tested on LDC2 version: `1.28.1 (DMD v2.098.1, LLVM 13.0.1)`
-
 ## about
 yes, you read that right! this is a dlang library and runtime for the gameboy advance.
-
-### acknowledgements
-
-this would not have been possible without:
-- [3ds-hello-dlang](https://github.com/TheGag96/3ds-hello-dlang/)
 
 ### what's included
 - minimal druntime
@@ -22,6 +15,8 @@ this would not have been possible without:
 - utilities for mmio and volatile bare metal io
 
 ## requirements
+
+**tested on LDC2 version: `1.28.1 (DMD v2.098.1, LLVM 13.0.1)`**
 
 i focused on making this as easy as possible to set up!
 all you need is a recent build of the LLVM D compiler (LDC), and a standard devkitarm installation.
@@ -50,3 +45,8 @@ if you get these errors, make sure you prefix your global variables with `__gsha
 ### errors about `TLS reference ... mismatches non-TLS definition ... section .bss`
 
 this means you're using a non-TLS variable with a TLS reference. this can often happen if you're individually compiling objects and then linking after you change the thread storage type of your variable. the solution is to just clean all intermediate object files and rebuild.
+
+## acknowledgements
+
+this would not have been possible without:
+- [3ds-hello-dlang](https://github.com/TheGag96/3ds-hello-dlang/)
