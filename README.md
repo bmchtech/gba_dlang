@@ -3,6 +3,8 @@
 
 a toolkit (libraries + runtime) for using the D programming language to develop for the [Game Boy Advance](https://en.wikipedia.org/wiki/Game_Boy_Advance) handheld game console.
 
+tested on LDC2 version: `1.28.1 (DMD v2.098.1, LLVM 13.0.1)`
+
 ## about
 yes, you read that right! this is a dlang library and runtime for the gameboy advance.
 
